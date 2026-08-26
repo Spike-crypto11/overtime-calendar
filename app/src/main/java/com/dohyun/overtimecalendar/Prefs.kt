@@ -9,6 +9,26 @@ object Prefs {
     private const val KEY_ENTRIES = "entries"     // {"yyyy-MM-dd":{"o":3,"s":0,"m":""}}
     private const val KEY_URL = "web_app_url"
     private const val KEY_PENDING = "pending"     // 서버 전송 실패분: ["yyyy-MM-dd", ...]
+    private const val KEY_COLOR_OT = "color_overtime"
+    private const val KEY_COLOR_SP = "color_special"
+
+    // 기본 색상 (팔레트에도 포함)
+    const val DEFAULT_OT = 0xFF1A6E1A.toInt()  // 초록
+    const val DEFAULT_SP = 0xFFC56A00.toInt()  // 주황
+
+    /** 팔레트: 선택 가능한 색 10개 */
+    val PALETTE = intArrayOf(
+        0xFF1A6E1A.toInt(), // 초록
+        0xFFC56A00.toInt(), // 주황
+        0xFFC0392B.toInt(), // 빨강
+        0xFF2F5496.toInt(), // 파랑
+        0xFF6A1B9A.toInt(), // 보라
+        0xFF00838F.toInt(), // 청록
+        0xFFD81B60.toInt(), // 분홍
+        0xFF5D4037.toInt(), // 갈색
+        0xFF455A64.toInt(), // 청회색
+        0xFF000000.toInt()  // 검정
+    )
 
     private fun sp(ctx: Context) =
         ctx.applicationContext.getSharedPreferences(PREF, Context.MODE_PRIVATE)
@@ -17,6 +37,16 @@ object Prefs {
     fun getUrl(ctx: Context): String = sp(ctx).getString(KEY_URL, "") ?: ""
     fun setUrl(ctx: Context, url: String) {
         sp(ctx).edit().putString(KEY_URL, url.trim()).apply()
+    }
+
+    // ----- 색상 -----
+    fun getOvertimeColor(ctx: Context): Int = sp(ctx).getInt(KEY_COLOR_OT, DEFAULT_OT)
+    fun getSpecialColor(ctx: Context): Int = sp(ctx).getInt(KEY_COLOR_SP, DEFAULT_SP)
+    fun setOvertimeColor(ctx: Context, color: Int) {
+        sp(ctx).edit().putInt(KEY_COLOR_OT, color).apply()
+    }
+    fun setSpecialColor(ctx: Context, color: Int) {
+        sp(ctx).edit().putInt(KEY_COLOR_SP, color).apply()
     }
 
     // ----- 전체 기록 -----

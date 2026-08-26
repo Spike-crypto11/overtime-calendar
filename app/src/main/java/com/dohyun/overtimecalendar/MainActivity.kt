@@ -122,6 +122,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         adapter.update(cells)
+        tvOvertimeSum.setTextColor(Prefs.getOvertimeColor(this))
+        tvSpecialSum.setTextColor(Prefs.getSpecialColor(this))
         tvOvertimeSum.text = "잔업 합계: ${fmt(otSum)}"
         tvSpecialSum.text = "특근 합계: ${fmt(spSum)}"
     }

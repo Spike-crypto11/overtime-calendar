@@ -62,8 +62,10 @@ class CalendarAdapter(
             if (cell.isToday) R.drawable.cell_bg_today else R.drawable.cell_bg
         )
 
-        // 값 표시
+        // 값 표시 (설정된 색상 적용)
         val e = cell.entry
+        holder.tvOvertime.setTextColor(Prefs.getOvertimeColor(ctx))
+        holder.tvSpecial.setTextColor(Prefs.getSpecialColor(ctx))
         holder.tvOvertime.text = if (e != null && e.overtime > 0) fmt(e.overtime) else ""
         holder.tvSpecial.text = if (e != null && e.special > 0) fmt(e.special) else ""
 

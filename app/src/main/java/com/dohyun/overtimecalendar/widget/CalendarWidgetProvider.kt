@@ -67,6 +67,8 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             val today = DateUtils.today()
             val pkg = context.packageName
             val res = context.resources
+            val otColor = Prefs.getOvertimeColor(context)
+            val spColor = Prefs.getSpecialColor(context)
 
             for (i in 0 until 42) {
                 val dayId = res.getIdentifier("day_$i", "id", pkg)
@@ -94,6 +96,8 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     )
 
                     val e = all[date]
+                    rv.setTextColor(otId, otColor)
+                    rv.setTextColor(spId, spColor)
                     rv.setTextViewText(otId, if (e != null && e.overtime > 0) fmt(e.overtime) else "")
                     rv.setTextViewText(spId, if (e != null && e.special > 0) fmt(e.special) else "")
 
