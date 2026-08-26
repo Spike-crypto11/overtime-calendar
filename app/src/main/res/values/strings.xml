@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">잔업특근 캘린더</string>
+    <string name="widget_label">잔업특근 달력</string>
+    <string name="settings">설정</string>
+    <string name="server_url">서버 URL (Apps Script 웹앱 주소)</string>
+    <string name="save">저장</string>
+    <string name="delete">삭제</string>
+    <string name="cancel">취소</string>
+    <string name="overtime">잔업</string>
+    <string name="special">특근</string>
+    <string name="memo">메모</string>
+    <string name="hours_hint">시간</string>
+    <string name="prev_month">◀</string>
+    <string name="next_month">▶</string>
+</resources>

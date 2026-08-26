@@ -1,0 +1,17 @@
+<resources>
+    <color name="primary">#2F5496</color>
+    <color name="primary_dark">#1F3A6E</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="bg">#FFFFFF</color>
+    <color name="cell_bg">#FFFFFF</color>
+    <color name="cell_border">#E0E0E0</color>
+    <color name="today_bg">#FFF6D6</color>
+    <color name="sunday">#CC0000</color>
+    <color name="saturday">#0055CC</color>
+    <color name="weekday_text">#333333</color>
+    <color name="overtime_color">#1A6E1A</color>
+    <color name="special_color">#C56A00</color>
+    <color name="header_sun">#C0392B</color>
+    <color name="header_sat">#1F5F9E</color>
+    <color name="muted">#999999</color>
+</resources>
