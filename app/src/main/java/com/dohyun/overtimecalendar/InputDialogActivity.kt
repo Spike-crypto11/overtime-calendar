@@ -34,6 +34,12 @@ class InputDialogActivity : AppCompatActivity() {
         container = findViewById(R.id.itemContainer)
         findViewById<TextView>(R.id.tvDialogTitle).text = DateUtils.withWeekday(date)
 
+        // 팝업 폭을 화면의 90%로 넓힘 (항목/버튼이 여유있게)
+        window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.9).toInt(),
+            android.view.WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
         buildItems()
 
         findViewById<TextView>(R.id.tvManageCats).setOnClickListener {
@@ -61,14 +67,17 @@ class InputDialogActivity : AppCompatActivity() {
             val row = LinearLayout(this)
             row.orientation = LinearLayout.HORIZONTAL
             row.gravity = Gravity.CENTER_VERTICAL
-            row.setPadding(0, dp(6), 0, dp(6))
+            row.setPadding(0, dp(4), 0, dp(4))
 
             val cb = CheckBox(this)
             cb.text = "${cat.emoji} ${cat.name}"
-            cb.textSize = 16f
+            cb.textSize = 15f
             cb.setTextColor(cat.color)
+            cb.maxLines = 1
+            cb.setSingleLine(true)
             val rec = existing[cat.id]
             cb.isChecked = rec != null
+            // 체크박스가 남는 폭을 다 먹지 않게 wrap + 최소폭
             val cbLp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             cb.layoutParams = cbLp
             checkBoxes[cat.id] = cb
@@ -78,8 +87,9 @@ class InputDialogActivity : AppCompatActivity() {
                 val et = EditText(this)
                 et.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 et.hint = "시간"
-                et.width = dp(80)
-                // 기존 기록이 있으면 그 값, 없으면 체크 상태에 따라 기본값
+                et.setSingleLine(true)
+                val etLp = LinearLayout.LayoutParams(dp(70), LinearLayout.LayoutParams.WRAP_CONTENT)
+                et.layoutParams = etLp
                 when {
                     rec != null && rec.value > 0 -> et.setText(fmt(rec.value))
                     cb.isChecked && cat.defaultValue > 0 -> et.setText(fmt(cat.defaultValue))
@@ -88,7 +98,6 @@ class InputDialogActivity : AppCompatActivity() {
                 valueInputs[cat.id] = et
                 row.addView(et)
 
-                // 체크할 때 비어있으면 기본값 자동 채움
                 cb.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked && et.text.toString().isBlank() && cat.defaultValue > 0) {
                         et.setText(fmt(cat.defaultValue))
