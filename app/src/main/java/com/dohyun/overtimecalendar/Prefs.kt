@@ -40,8 +40,8 @@ object Prefs {
     // ---------- 카테고리 ----------
     /** 기본 카테고리(최초 실행 시): 잔업 🕒 초록, 특근 📋 주황 */
     private fun defaultCategories(): List<Category> = listOf(
-        Category("overtime", "잔업", "🕒", 0xFF1A6E1A.toInt(), true),
-        Category("special", "특근", "📋", 0xFFC56A00.toInt(), true)
+        Category("overtime", "잔업", "🕒", 0xFF1A6E1A.toInt(), true, 3.0),
+        Category("special", "특근", "📋", 0xFFC56A00.toInt(), true, 8.0)
     )
 
     fun getCategories(ctx: Context): MutableList<Category> {
@@ -62,7 +62,8 @@ object Prefs {
                         o.getString("name"),
                         o.optString("emoji", ""),
                         o.getInt("color"),
-                        o.optBoolean("hasNumber", true)
+                        o.optBoolean("hasNumber", true),
+                        o.optDouble("defaultValue", 0.0)
                     )
                 )
             }
@@ -85,6 +86,7 @@ object Prefs {
             o.put("emoji", c.emoji)
             o.put("color", c.color)
             o.put("hasNumber", c.hasNumber)
+            o.put("defaultValue", c.defaultValue)
             arr.put(o)
         }
         sp(ctx).edit().putString(KEY_CATS, arr.toString()).apply()

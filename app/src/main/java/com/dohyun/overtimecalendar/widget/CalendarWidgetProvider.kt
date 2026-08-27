@@ -79,8 +79,8 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         else -> 0xFF333333.toInt()
                     }
                     rv.setTextColor(dayId, dColor)
-                    rv.setInt(cellId, "setBackgroundColor",
-                        if (date == today) 0xFFFFF3CC.toInt() else 0xFFFFFFFF.toInt())
+                    rv.setInt(cellId, "setBackgroundResource",
+                        if (date == today) R.drawable.widget_cell_today else R.drawable.widget_cell_border)
 
                     // 색막대 라벨 채우기
                     val recs = allRecords[date] ?: emptyList()
@@ -98,8 +98,6 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                                 if (cat != null) {
                                     val numPart = if (cat.hasNumber && r.value > 0) " ${fmt(r.value)}" else ""
                                     rv.setTextViewText(labelId, "${cat.emoji}${cat.name}$numPart")
-                                    rv.setInt(labelId, "setBackgroundResource", R.drawable.label_bg)
-                                    // 배경 색을 카테고리 색으로 덮기
                                     rv.setInt(labelId, "setBackgroundColor", cat.color)
                                     rv.setTextColor(labelId, 0xFFFFFFFF.toInt())
                                 } else {
@@ -128,7 +126,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         val labelId = res.getIdentifier("label_${i}_$k", "id", pkg)
                         rv.setViewVisibility(labelId, android.view.View.GONE)
                     }
-                    rv.setInt(cellId, "setBackgroundColor", 0xFFF7F7F7.toInt())
+                    rv.setInt(cellId, "setBackgroundResource", R.drawable.widget_cell_border)
                     rv.setOnClickPendingIntent(cellId, null)
                 }
             }

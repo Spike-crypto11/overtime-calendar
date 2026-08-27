@@ -79,9 +79,21 @@ class InputDialogActivity : AppCompatActivity() {
                 et.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 et.hint = "시간"
                 et.width = dp(80)
-                et.setText(if (rec != null && rec.value > 0) fmt(rec.value) else "")
+                // 기존 기록이 있으면 그 값, 없으면 체크 상태에 따라 기본값
+                when {
+                    rec != null && rec.value > 0 -> et.setText(fmt(rec.value))
+                    cb.isChecked && cat.defaultValue > 0 -> et.setText(fmt(cat.defaultValue))
+                    else -> et.setText("")
+                }
                 valueInputs[cat.id] = et
                 row.addView(et)
+
+                // 체크할 때 비어있으면 기본값 자동 채움
+                cb.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked && et.text.toString().isBlank() && cat.defaultValue > 0) {
+                        et.setText(fmt(cat.defaultValue))
+                    }
+                }
             }
 
             container.addView(row)

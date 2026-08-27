@@ -76,15 +76,16 @@ class CategoryActivity : AppCompatActivity() {
         val emojiPalette = view.findViewById<LinearLayout>(R.id.emojiPalette)
         val colorPalette = view.findViewById<LinearLayout>(R.id.colorPalette)
         val cbHasNumber = view.findViewById<CheckBox>(R.id.cbHasNumber)
+        val etDefault = view.findViewById<EditText>(R.id.etCatDefault)
         val btnDelete = view.findViewById<Button>(R.id.btnCatDelete)
 
         var selectedColor = cat?.color ?: Prefs.PALETTE[0]
 
-        // 기존값 채우기
         if (cat != null) {
             etName.setText(cat.name)
             etEmoji.setText(cat.emoji)
             cbHasNumber.isChecked = cat.hasNumber
+            if (cat.defaultValue > 0) etDefault.setText(fmt(cat.defaultValue))
         } else {
             cbHasNumber.isChecked = false
             btnDelete.visibility = View.GONE
@@ -135,17 +136,18 @@ class CategoryActivity : AppCompatActivity() {
                 Toast.makeText(this, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val defVal = etDefault.text.toString().trim().toDoubleOrNull() ?: 0.0
             if (cat == null) {
                 val newCat = Category(
                     id = "cat_" + System.currentTimeMillis(),
                     name = name, emoji = emoji, color = selectedColor,
-                    hasNumber = cbHasNumber.isChecked
+                    hasNumber = cbHasNumber.isChecked, defaultValue = defVal
                 )
                 Prefs.addCategory(this, newCat)
             } else {
                 Prefs.updateCategory(this, cat.copy(
                     name = name, emoji = emoji, color = selectedColor,
-                    hasNumber = cbHasNumber.isChecked
+                    hasNumber = cbHasNumber.isChecked, defaultValue = defVal
                 ))
             }
             CalendarWidgetProvider.updateAll(this)
@@ -169,4 +171,7 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()
+
+    private fun fmt(v: Double): String =
+        if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 }

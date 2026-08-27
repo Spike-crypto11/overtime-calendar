@@ -9,7 +9,8 @@ data class Category(
     val name: String,      // 표시 이름 (예: "잔업")
     val emoji: String,     // 이모지 (예: "🕒")
     val color: Int,        // 막대 색 (ARGB)
-    val hasNumber: Boolean // true면 시간 숫자 입력, false면 표시만
+    val hasNumber: Boolean,// true면 시간 숫자 입력, false면 표시만
+    val defaultValue: Double = 0.0 // 체크 시 기본으로 채워질 시간 (잔업3, 특근8 등)
 )
 
 /**

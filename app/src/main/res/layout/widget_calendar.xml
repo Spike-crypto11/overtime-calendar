@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#FFFFFF" android:padding="4dp">
+    android:orientation="vertical" android:background="@drawable/widget_bg">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:background="#2F5496" android:padding="8dp" android:gravity="center_vertical">
+        android:orientation="horizontal" android:background="@drawable/widget_header_bg" android:padding="10dp" android:gravity="center_vertical">
         <TextView android:id="@+id/widgetTitle" android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:text="2026년 8월" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/>
         <TextView android:id="@+id/widgetRefresh" android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -12,576 +12,576 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:background="#4472C4">
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="일" android:textColor="#FFDDDD" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="일" android:textColor="#FFE0E0" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="월" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="월" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="화" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="화" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="수" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="수" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="목" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="목" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="금" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="금" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center" android:text="토" android:textColor="#DDE8FF" android:textSize="14sp" android:textStyle="bold" android:padding="4dp"/>
+            android:gravity="center" android:text="토" android:textColor="#DDE8FF" android:textSize="14sp" android:textStyle="bold" android:padding="5dp"/>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
         <LinearLayout android:id="@+id/cell_0" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_0" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_0_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_0_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_1" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_1" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_1_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_1_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_2" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_2" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_2_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_2_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_3" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_3" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_3_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_3_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_4" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_4" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_4_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_4_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_5" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_5" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_5_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_5_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_6" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_6" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_6_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_6_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
         <LinearLayout android:id="@+id/cell_7" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_7" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_7_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_7_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_8" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_8" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_8_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_8_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_9" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_9" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_9_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_9_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_10" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_10" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_10_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_10_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_11" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_11" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_11_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_11_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_12" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_12" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_12_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_12_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_13" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_13" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_13_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_13_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
         <LinearLayout android:id="@+id/cell_14" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_14" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_14_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_14_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_15" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_15" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_15_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_15_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_16" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_16" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_16_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_16_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_17" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_17" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_17_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_17_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_18" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_18" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_18_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_18_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_19" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_19" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_19_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_19_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_20" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_20" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_20_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_20_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
         <LinearLayout android:id="@+id/cell_21" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_21" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_21_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_21_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_22" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_22" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_22_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_22_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_23" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_23" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_23_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_23_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_24" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_24" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_24_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_24_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_25" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_25" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_25_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_25_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_26" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_26" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_26_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_26_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_27" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_27" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_27_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_27_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
         <LinearLayout android:id="@+id/cell_28" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_28" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_28_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_28_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_29" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_29" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_29_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_29_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_30" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_30" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_30_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_30_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_31" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_31" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_31_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_31_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_32" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_32" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_32_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_32_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_33" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_33" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_33_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_33_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_34" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_34" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_34_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_34_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
         <LinearLayout android:id="@+id/cell_35" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_35" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_35_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_35_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_36" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_36" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_36_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_36_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_37" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_37" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_37_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_37_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_38" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_38" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_38_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_38_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_39" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_39" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_39_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_39_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_40" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_40" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_40_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_40_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/cell_41" android:layout_width="0dp" android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical" android:background="#FFFFFF" android:padding="2dp">
+            android:layout_weight="1" android:orientation="vertical" android:background="@drawable/widget_cell_border" android:padding="2dp">
             <TextView android:id="@+id/day_41" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingBottom="1dp"/>
+                android:text="" android:textColor="#333333" android:textSize="14sp" android:textStyle="bold" android:gravity="left" android:paddingLeft="2dp" android:paddingBottom="1dp"/>
             <TextView android:id="@+id/label_41_0" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
             <TextView android:id="@+id/label_41_1" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="" android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
                 android:singleLine="true" android:ellipsize="end" android:paddingLeft="4dp" android:paddingRight="2dp"
-                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginTop="2dp" android:visibility="gone"/>
+                android:paddingTop="2dp" android:paddingBottom="2dp" android:layout_marginLeft="1dp" android:layout_marginRight="1dp" android:layout_marginTop="2dp" android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
