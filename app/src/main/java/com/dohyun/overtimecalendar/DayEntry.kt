@@ -10,7 +10,8 @@ data class Category(
     val emoji: String,     // 이모지 (예: "🕒")
     val color: Int,        // 막대 색 (ARGB)
     val hasNumber: Boolean,// true면 시간 숫자 입력, false면 표시만
-    val defaultValue: Double = 0.0 // 체크 시 기본으로 채워질 시간 (잔업3, 특근8 등)
+    val defaultValue: Double = 0.0, // 체크 시 기본으로 채워질 시간 (잔업3, 특근8 등)
+    val iconOnly: Boolean = false   // true면 위젯/달력에 이름 없이 이모지만 표시
 )
 
 /**

@@ -84,7 +84,13 @@ class CalendarAdapter(
         val cat = catMap[rec.categoryId]
         if (cat == null) { tv.text = ""; return }
         val valStr = if (cat.hasNumber && rec.value > 0) " ${fmt(rec.value)}" else ""
-        tv.text = "${cat.emoji}$valStr"
+        if (cat.iconOnly) {
+            tv.text = "${cat.emoji}$valStr"
+            tv.textSize = 16f
+        } else {
+            tv.text = "${cat.emoji}$valStr"
+            tv.textSize = 15f
+        }
         tv.setTextColor(cat.color)
     }
 

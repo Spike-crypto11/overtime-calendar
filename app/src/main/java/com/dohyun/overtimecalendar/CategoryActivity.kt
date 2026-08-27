@@ -76,6 +76,7 @@ class CategoryActivity : AppCompatActivity() {
         val emojiPalette = view.findViewById<LinearLayout>(R.id.emojiPalette)
         val colorPalette = view.findViewById<LinearLayout>(R.id.colorPalette)
         val cbHasNumber = view.findViewById<CheckBox>(R.id.cbHasNumber)
+        val cbIconOnly = view.findViewById<CheckBox>(R.id.cbIconOnly)
         val etDefault = view.findViewById<EditText>(R.id.etCatDefault)
         val btnDelete = view.findViewById<Button>(R.id.btnCatDelete)
 
@@ -85,9 +86,11 @@ class CategoryActivity : AppCompatActivity() {
             etName.setText(cat.name)
             etEmoji.setText(cat.emoji)
             cbHasNumber.isChecked = cat.hasNumber
+            cbIconOnly.isChecked = cat.iconOnly
             if (cat.defaultValue > 0) etDefault.setText(fmt(cat.defaultValue))
         } else {
             cbHasNumber.isChecked = false
+            cbIconOnly.isChecked = false
             btnDelete.visibility = View.GONE
         }
 
@@ -141,13 +144,15 @@ class CategoryActivity : AppCompatActivity() {
                 val newCat = Category(
                     id = "cat_" + System.currentTimeMillis(),
                     name = name, emoji = emoji, color = selectedColor,
-                    hasNumber = cbHasNumber.isChecked, defaultValue = defVal
+                    hasNumber = cbHasNumber.isChecked, defaultValue = defVal,
+                    iconOnly = cbIconOnly.isChecked
                 )
                 Prefs.addCategory(this, newCat)
             } else {
                 Prefs.updateCategory(this, cat.copy(
                     name = name, emoji = emoji, color = selectedColor,
-                    hasNumber = cbHasNumber.isChecked, defaultValue = defVal
+                    hasNumber = cbHasNumber.isChecked, defaultValue = defVal,
+                    iconOnly = cbIconOnly.isChecked
                 ))
             }
             CalendarWidgetProvider.updateAll(this)

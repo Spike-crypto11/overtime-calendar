@@ -60,6 +60,13 @@
             android:text="시간(숫자) 입력 항목"
             android:paddingTop="12dp"/>
 
+        <CheckBox
+            android:id="@+id/cbIconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름 없이 아이콘만 표시 (위젯에서 크게)"
+            android:paddingTop="4dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

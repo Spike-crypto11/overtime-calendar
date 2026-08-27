@@ -97,7 +97,14 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                                 val cat = catMap[r.categoryId]
                                 if (cat != null) {
                                     val numPart = if (cat.hasNumber && r.value > 0) " ${fmt(r.value)}" else ""
-                                    rv.setTextViewText(labelId, "${cat.emoji}${cat.name}$numPart")
+                                    if (cat.iconOnly) {
+                                        // 이름 없이 이모지(+숫자)만, 크게
+                                        rv.setTextViewText(labelId, "${cat.emoji}$numPart")
+                                        rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, 16f)
+                                    } else {
+                                        rv.setTextViewText(labelId, "${cat.emoji}${cat.name}$numPart")
+                                        rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
+                                    }
                                     rv.setInt(labelId, "setBackgroundColor", cat.color)
                                     rv.setTextColor(labelId, 0xFFFFFFFF.toInt())
                                 } else {
