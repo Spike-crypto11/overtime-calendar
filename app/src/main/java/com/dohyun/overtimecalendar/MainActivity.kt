@@ -16,11 +16,10 @@ import java.util.Calendar
 class MainActivity : AppCompatActivity() {
 
     private var year = 0
-    private var month = 0  // 1~12
+    private var month = 0
 
     private lateinit var tvMonthTitle: TextView
-    private lateinit var tvOvertimeSum: TextView
-    private lateinit var tvSpecialSum: TextView
+    private lateinit var sumContainer: LinearLayout
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: CalendarAdapter
 
@@ -33,13 +32,12 @@ class MainActivity : AppCompatActivity() {
         month = c.get(Calendar.MONTH) + 1
 
         tvMonthTitle = findViewById(R.id.tvMonthTitle)
-        tvOvertimeSum = findViewById(R.id.tvOvertimeSum)
-        tvSpecialSum = findViewById(R.id.tvSpecialSum)
+        sumContainer = findViewById(R.id.sumContainer)
         recycler = findViewById(R.id.recyclerCalendar)
 
         buildWeekdayHeader()
 
-        adapter = CalendarAdapter(emptyList()) { cell -> openInput(cell.date) }
+        adapter = CalendarAdapter(emptyList(), Prefs.getCategories(this)) { cell -> openInput(cell.date) }
         recycler.layoutManager = GridLayoutManager(this, 7)
         recycler.adapter = adapter
 
@@ -53,13 +51,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         render()
-        // 서버에서 현재 월 당겨오기 + 대기분 재전송
         SyncManager.flushPending(this)
         SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
-            if (ok) {
-                render()
-                CalendarWidgetProvider.updateAll(this)
-            }
+            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
     }
 
@@ -68,17 +62,12 @@ class MainActivity : AppCompatActivity() {
         header.removeAllViews()
         for (i in 0..6) {
             val tv = TextView(this)
-            val lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            tv.layoutParams = lp
+            tv.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             tv.gravity = Gravity.CENTER
             tv.text = DateUtils.weekdayLabel(i)
             tv.textSize = 13f
             tv.setPadding(0, 12, 0, 12)
-            val col = when (i) {
-                0 -> R.color.sunday
-                6 -> R.color.saturday
-                else -> R.color.weekday_text
-            }
+            val col = when (i) { 0 -> R.color.sunday; 6 -> R.color.saturday; else -> R.color.weekday_text }
             tv.setTextColor(ContextCompat.getColor(this, col))
             header.addView(tv)
         }
@@ -89,43 +78,50 @@ class MainActivity : AppCompatActivity() {
         if (month < 1) { month = 12; year-- }
         if (month > 12) { month = 1; year++ }
         render()
-        SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
-            if (ok) render()
-        }
+        SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok -> if (ok) render() }
     }
 
     private fun render() {
         tvMonthTitle.text = "${year}년 ${month}월"
 
-        val all = Prefs.getAll(this)
+        val allRecords = Prefs.getAllRecords(this)
+        val cats = Prefs.getCategories(this)
         val cells = ArrayList<CalendarCell>()
         val lead = DateUtils.firstWeekdayIndex(year, month)
         val ndays = DateUtils.daysInMonth(year, month)
         val today = DateUtils.today()
 
-        // 앞쪽 빈 칸
-        for (i in 0 until lead) {
-            cells.add(CalendarCell(0, "", i % 7, false, null))
-        }
-        var otSum = 0.0
-        var spSum = 0.0
+        for (i in 0 until lead) cells.add(CalendarCell(0, "", i % 7, false, emptyList()))
+
+        // 숫자 항목별 월 합계
+        val sums = HashMap<String, Double>()
         for (d in 1..ndays) {
             val date = DateUtils.ymd(year, month, d)
             val wd = (lead + d - 1) % 7
-            val entry = all[date]
-            if (entry != null) { otSum += entry.overtime; spSum += entry.special }
-            cells.add(CalendarCell(d, date, wd, date == today, entry))
+            val recs = allRecords[date] ?: emptyList()
+            for (r in recs) sums[r.categoryId] = (sums[r.categoryId] ?: 0.0) + r.value
+            cells.add(CalendarCell(d, date, wd, date == today, recs))
         }
-        // 뒤쪽 빈 칸 (7의 배수로 채움)
-        while (cells.size % 7 != 0) {
-            cells.add(CalendarCell(0, "", cells.size % 7, false, null))
-        }
+        while (cells.size % 7 != 0) cells.add(CalendarCell(0, "", cells.size % 7, false, emptyList()))
 
-        adapter.update(cells)
-        tvOvertimeSum.setTextColor(Prefs.getOvertimeColor(this))
-        tvSpecialSum.setTextColor(Prefs.getSpecialColor(this))
-        tvOvertimeSum.text = "잔업 합계: ${fmt(otSum)}"
-        tvSpecialSum.text = "특근 합계: ${fmt(spSum)}"
+        adapter.update(cells, cats)
+        renderSums(cats, sums)
+    }
+
+    /** 숫자 항목별 합계를 하단에 표시 */
+    private fun renderSums(cats: List<Category>, sums: Map<String, Double>) {
+        sumContainer.removeAllViews()
+        val numCats = cats.filter { it.hasNumber }
+        for (cat in numCats) {
+            val tv = TextView(this)
+            tv.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            tv.gravity = Gravity.CENTER
+            tv.textSize = 15f
+            tv.setTextColor(cat.color)
+            val v = sums[cat.id] ?: 0.0
+            tv.text = "${cat.name} ${fmt(v)}"
+            sumContainer.addView(tv)
+        }
     }
 
     private fun openInput(date: String) {

@@ -28,6 +28,10 @@
             android:exported="false"/>
 
         <activity
+            android:name=".CategoryActivity"
+            android:exported="false"/>
+
+        <activity
             android:name=".InputDialogActivity"
             android:exported="true"
             android:theme="@style/Theme.OvertimeCalendar.Dialog"

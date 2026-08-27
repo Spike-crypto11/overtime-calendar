@@ -66,34 +66,12 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <!-- 하단 합계 -->
+    <!-- 하단 합계 (숫자 항목별 동적 생성) -->
     <LinearLayout
+        android:id="@+id/sumContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#F7F7F7"
-        android:padding="12dp">
-
-        <TextView
-            android:id="@+id/tvOvertimeSum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="잔업 합계: 0"
-            android:textColor="@color/overtime_color"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvSpecialSum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="특근 합계: 0"
-            android:textColor="@color/special_color"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+        android:padding="12dp"/>
 </LinearLayout>

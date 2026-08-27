@@ -1,98 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:padding="20dp">
 
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2026-08-10 (월)"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:paddingBottom="12dp"/>
+
+    <!-- 항목 목록 (스크롤) -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="120dp">
+
+        <LinearLayout
+            android:id="@+id/itemContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+    <!-- 항목 관리 이동 -->
+    <TextView
+        android:id="@+id/tvManageCats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ 항목 종류 관리"
+        android:textColor="@color/primary"
+        android:textSize="13sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
+
+    <!-- 버튼 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingTop="12dp">
 
-        <TextView
-            android:id="@+id/tvDialogTitle"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2026-01-05 (월)"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:text="@string/cancel"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
             android:textColor="@color/primary"
-            android:paddingBottom="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/overtime"
-            android:textColor="@color/overtime_color"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/etOvertime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="@string/hours_hint"
-            android:importantForAutofill="no"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/special"
-            android:textColor="@color/special_color"
             android:textStyle="bold"
-            android:paddingTop="12dp"/>
-        <EditText
-            android:id="@+id/etSpecial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="@string/hours_hint"
-            android:importantForAutofill="no"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/memo"
-            android:textColor="@color/weekday_text"
-            android:textStyle="bold"
-            android:paddingTop="12dp"/>
-        <EditText
-            android:id="@+id/etMemo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:importantForAutofill="no"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:paddingTop="20dp">
-
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/delete"
-                android:textColor="@color/sunday"
-                style="?android:attr/borderlessButtonStyle"/>
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel"
-                style="?android:attr/borderlessButtonStyle"/>
-
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                style="?android:attr/borderlessButtonStyle"/>
-        </LinearLayout>
+            style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

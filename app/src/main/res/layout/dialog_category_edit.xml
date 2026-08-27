@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/etCatName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="예: 화장실"
+            android:importantForAutofill="no"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이모지"
+            android:textStyle="bold"
+            android:paddingTop="12dp"/>
+        <LinearLayout
+            android:id="@+id/emojiPalette"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+        <EditText
+            android:id="@+id/etCatEmoji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="직접 입력도 가능 (예: 🚽)"
+            android:importantForAutofill="no"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="색"
+            android:textStyle="bold"
+            android:paddingTop="12dp"/>
+        <LinearLayout
+            android:id="@+id/colorPalette"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="4dp"/>
+
+        <CheckBox
+            android:id="@+id/cbHasNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간(숫자) 입력 항목"
+            android:paddingTop="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:paddingTop="16dp">
+            <Button
+                android:id="@+id/btnCatDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="삭제"
+                android:textColor="@color/sunday"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button
+                android:id="@+id/btnCatCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취소"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button
+                android:id="@+id/btnCatSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="저장"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                style="?android:attr/borderlessButtonStyle"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

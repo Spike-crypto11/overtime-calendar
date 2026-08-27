@@ -3,6 +3,7 @@ package com.dohyun.overtimecalendar
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -11,7 +12,7 @@ import java.net.URL
 import java.net.URLEncoder
 import java.util.concurrent.Executors
 
-/** Apps Script 웹앱과 GET 방식으로 통신 (POST 리디렉션 버그 회피) */
+/** Apps Script 웹앱과 GET 방식 통신 (다중 항목 지원) */
 object SyncManager {
 
     private val executor = Executors.newSingleThreadExecutor()
@@ -25,7 +26,7 @@ object SyncManager {
         conn.requestMethod = "GET"
         conn.connectTimeout = 15000
         conn.readTimeout = 15000
-        conn.instanceFollowRedirects = true   // Apps Script 302(GET) 자동 추적
+        conn.instanceFollowRedirects = true
         try {
             val code = conn.responseCode
             val stream = if (code in 200..299) conn.inputStream else conn.errorStream
@@ -40,8 +41,19 @@ object SyncManager {
         }
     }
 
-    /** 한 날짜 저장 (백그라운드). 성공/실패를 콜백으로 전달 */
-    fun push(ctx: Context, date: String, e: DayEntry, cb: ((Boolean) -> Unit)? = null) {
+    private fun recordsToJson(records: List<DayRecord>): String {
+        val arr = JSONArray()
+        for (r in records) {
+            val o = JSONObject()
+            o.put("c", r.categoryId)
+            o.put("v", r.value)
+            arr.put(o)
+        }
+        return arr.toString()
+    }
+
+    /** 한 날짜 기록 전체 저장 */
+    fun push(ctx: Context, date: String, records: List<DayRecord>, cb: ((Boolean) -> Unit)? = null) {
         val base = Prefs.getUrl(ctx)
         if (base.isEmpty()) {
             Prefs.addPending(ctx, date)
@@ -51,12 +63,8 @@ object SyncManager {
         executor.execute {
             var ok = false
             try {
-                val u = base +
-                        "?action=save" +
-                        "&date=" + enc(date) +
-                        "&overtime=" + enc(e.overtime.toString()) +
-                        "&special=" + enc(e.special.toString()) +
-                        "&memo=" + enc(e.memo)
+                val u = base + "?action=save&date=" + enc(date) +
+                        "&records=" + enc(recordsToJson(records))
                 val res = httpGet(u)
                 ok = JSONObject(res).optBoolean("ok", false)
             } catch (_: Exception) {
@@ -67,7 +75,7 @@ object SyncManager {
         }
     }
 
-    /** 한 달치 조회 후 로컬 반영 (백그라운드) → 완료 콜백(main) */
+    /** 한 달치 조회 후 로컬 반영 */
     fun pullMonth(ctx: Context, monthPrefix: String, cb: ((Boolean) -> Unit)? = null) {
         val base = Prefs.getUrl(ctx)
         if (base.isEmpty()) { cb?.invoke(false); return }
@@ -79,14 +87,17 @@ object SyncManager {
                 val obj = JSONObject(res)
                 if (obj.optBoolean("ok", false)) {
                     val arr = obj.getJSONArray("entries")
-                    val map = HashMap<String, DayEntry>()
+                    val map = HashMap<String, List<DayRecord>>()
                     for (i in 0 until arr.length()) {
                         val o = arr.getJSONObject(i)
-                        map[o.getString("date")] = DayEntry(
-                            o.optDouble("overtime", 0.0),
-                            o.optDouble("special", 0.0),
-                            o.optString("memo", "")
-                        )
+                        val date = o.getString("date")
+                        val recArr = o.getJSONArray("records")
+                        val recs = ArrayList<DayRecord>()
+                        for (j in 0 until recArr.length()) {
+                            val ro = recArr.getJSONObject(j)
+                            recs.add(DayRecord(ro.getString("c"), ro.optDouble("v", 0.0)))
+                        }
+                        if (recs.isNotEmpty()) map[date] = recs
                     }
                     Prefs.replaceMonth(ctx, monthPrefix, map)
                     ok = true
@@ -98,16 +109,13 @@ object SyncManager {
         }
     }
 
-    /** 전송 대기중이던 날짜들 재전송 */
     fun flushPending(ctx: Context) {
         val pending = Prefs.getPending(ctx)
         for (date in pending) {
-            val e = Prefs.get(ctx, date) ?: DayEntry()
-            push(ctx, date, e, null)
+            push(ctx, date, Prefs.getRecords(ctx, date), null)
         }
     }
 
-    /** 연결 테스트 (설정 화면용) */
     fun test(ctx: Context, url: String, cb: (Boolean, String) -> Unit) {
         executor.execute {
             var ok = false
@@ -116,7 +124,7 @@ object SyncManager {
                 val res = httpGet(url.trim() + "?action=list&month=__test__")
                 val obj = JSONObject(res)
                 ok = obj.optBoolean("ok", false)
-                msg = if (ok) "연결 성공! 서버가 정상 응답했습니다." else "응답은 왔지만 형식이 예상과 다릅니다: $res"
+                msg = if (ok) "연결 성공! 서버가 정상 응답했습니다." else "응답 형식이 예상과 다릅니다: $res"
             } catch (ex: Exception) {
                 msg = "연결 실패: ${ex.message}"
             }
