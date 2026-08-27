@@ -113,7 +113,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     // 클릭 → 입력 팝업
                     val clickIntent = Intent(context, InputDialogActivity::class.java).apply {
                         putExtra(InputDialogActivity.EXTRA_DATE, date)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
                         data = Uri.parse("otcal://day/$date")
                     }
                     rv.setOnClickPendingIntent(
