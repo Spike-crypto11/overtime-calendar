@@ -18,6 +18,16 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/tvHoliday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/sunday"
+        android:textSize="10sp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+
+    <TextView
         android:id="@+id/tvOvertime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -19,6 +19,7 @@ class CalendarAdapter(
     class VH(v: View) : RecyclerView.ViewHolder(v) {
         val root: LinearLayout = v.findViewById(R.id.cellRoot)
         val tvDay: TextView = v.findViewById(R.id.tvDay)
+        val tvHoliday: TextView = v.findViewById(R.id.tvHoliday)
         val tvLine1: TextView = v.findViewById(R.id.tvOvertime)
         val tvLine2: TextView = v.findViewById(R.id.tvSpecial)
     }
@@ -42,6 +43,7 @@ class CalendarAdapter(
 
         if (cell.day == 0) {
             holder.tvDay.text = ""
+            holder.tvHoliday.text = ""
             holder.tvLine1.text = ""
             holder.tvLine2.text = ""
             holder.root.setBackgroundColor(0x00000000)
@@ -51,12 +53,27 @@ class CalendarAdapter(
         }
 
         holder.tvDay.text = cell.day.toString()
-        val dayColor = when (cell.weekdayIndex) {
-            0 -> R.color.sunday
-            6 -> R.color.saturday
+
+        // 공휴일이면 날짜 빨강, 아니면 요일 색
+        val hasHoliday = cell.holidays.any { it.kind == "holiday" }
+        val dayColor = when {
+            hasHoliday -> R.color.sunday
+            cell.weekdayIndex == 0 -> R.color.sunday
+            cell.weekdayIndex == 6 -> R.color.saturday
             else -> R.color.weekday_text
         }
         holder.tvDay.setTextColor(ContextCompat.getColor(ctx, dayColor))
+
+        // 특일 이름 표시 (공휴일 > 절기 > 기념일 순, 첫 번째만)
+        val topHol = cell.holidays.firstOrNull { it.kind == "holiday" }
+            ?: cell.holidays.firstOrNull { it.kind == "term" }
+            ?: cell.holidays.firstOrNull()
+        if (topHol != null) {
+            holder.tvHoliday.text = topHol.name
+            holder.tvHoliday.setTextColor(Prefs.colorForKind(topHol.kind))
+        } else {
+            holder.tvHoliday.text = ""
+        }
         holder.root.setBackgroundResource(
             if (cell.isToday) R.drawable.cell_bg_today else R.drawable.cell_bg
         )

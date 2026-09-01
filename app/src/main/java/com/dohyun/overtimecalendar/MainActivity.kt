@@ -55,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
             if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
+        // 특일이 아직 없으면 받아오기
+        if (Prefs.getAllHolidays(this).isEmpty()) {
+            SyncManager.pullHolidays(this) { ok ->
+                if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
+            }
+        }
     }
 
     private fun buildWeekdayHeader() {
@@ -85,24 +91,25 @@ class MainActivity : AppCompatActivity() {
         tvMonthTitle.text = "${year}년 ${month}월"
 
         val allRecords = Prefs.getAllRecords(this)
+        val allHolidays = Prefs.getAllHolidays(this)
         val cats = Prefs.getCategories(this)
         val cells = ArrayList<CalendarCell>()
         val lead = DateUtils.firstWeekdayIndex(year, month)
         val ndays = DateUtils.daysInMonth(year, month)
         val today = DateUtils.today()
 
-        for (i in 0 until lead) cells.add(CalendarCell(0, "", i % 7, false, emptyList()))
+        for (i in 0 until lead) cells.add(CalendarCell(0, "", i % 7, false, emptyList(), emptyList()))
 
-        // 숫자 항목별 월 합계
         val sums = HashMap<String, Double>()
         for (d in 1..ndays) {
             val date = DateUtils.ymd(year, month, d)
             val wd = (lead + d - 1) % 7
             val recs = allRecords[date] ?: emptyList()
+            val hols = allHolidays[date] ?: emptyList()
             for (r in recs) sums[r.categoryId] = (sums[r.categoryId] ?: 0.0) + r.value
-            cells.add(CalendarCell(d, date, wd, date == today, recs))
+            cells.add(CalendarCell(d, date, wd, date == today, recs, hols))
         }
-        while (cells.size % 7 != 0) cells.add(CalendarCell(0, "", cells.size % 7, false, emptyList()))
+        while (cells.size % 7 != 0) cells.add(CalendarCell(0, "", cells.size % 7, false, emptyList(), emptyList()))
 
         adapter.update(cells, cats)
         renderSums(cats, sums)

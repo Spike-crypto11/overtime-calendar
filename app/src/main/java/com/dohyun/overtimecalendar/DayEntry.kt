@@ -22,11 +22,19 @@ data class DayRecord(
     val value: Double = 0.0   // hasNumber=false면 0
 )
 
+/** 특일 (공휴일/절기/기념일) */
+data class Holiday(
+    val date: String,
+    val kind: String,  // "holiday" / "term" / "anniv"
+    val name: String
+)
+
 /** 달력 한 칸 (빈 칸이면 day=0) */
 data class CalendarCell(
     val day: Int,           // 0 = 이번 달에 속하지 않는 빈 칸
     val date: String,       // yyyy-MM-dd (빈 칸이면 "")
     val weekdayIndex: Int,  // 0=일 .. 6=토
     val isToday: Boolean,
-    val records: List<DayRecord>
+    val records: List<DayRecord>,
+    val holidays: List<Holiday> = emptyList()
 )

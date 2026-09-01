@@ -57,6 +57,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             )
 
             val allRecords = Prefs.getAllRecords(context)
+            val allHolidays = Prefs.getAllHolidays(context)
             val catMap: Map<String, Category> = Prefs.getCategories(context).associateBy { it.id }
             val lead = DateUtils.firstWeekdayIndex(year, month)
             val ndays = DateUtils.daysInMonth(year, month)
@@ -72,15 +73,31 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 if (dayNum in 1..ndays) {
                     val date = DateUtils.ymd(year, month, dayNum)
                     val wd = i % 7
+                    val hols = allHolidays[date] ?: emptyList()
+                    val hasHoliday = hols.any { it.kind == "holiday" }
                     rv.setTextViewText(dayId, dayNum.toString())
-                    val dColor = when (wd) {
-                        0 -> 0xFFCC0000.toInt()
-                        6 -> 0xFF0055CC.toInt()
+                    val dColor = when {
+                        hasHoliday -> 0xFFCC0000.toInt()
+                        wd == 0 -> 0xFFCC0000.toInt()
+                        wd == 6 -> 0xFF0055CC.toInt()
                         else -> 0xFF333333.toInt()
                     }
                     rv.setTextColor(dayId, dColor)
                     rv.setInt(cellId, "setBackgroundResource",
                         if (date == today) R.drawable.widget_cell_today else R.drawable.widget_cell_border)
+
+                    // 특일 이름 (공휴일 > 절기 > 기념일)
+                    val holId = res.getIdentifier("hol_$i", "id", pkg)
+                    val topHol = hols.firstOrNull { it.kind == "holiday" }
+                        ?: hols.firstOrNull { it.kind == "term" }
+                        ?: hols.firstOrNull()
+                    if (topHol != null) {
+                        rv.setTextViewText(holId, topHol.name)
+                        rv.setTextColor(holId, Prefs.colorForKind(topHol.kind))
+                        rv.setViewVisibility(holId, android.view.View.VISIBLE)
+                    } else {
+                        rv.setViewVisibility(holId, android.view.View.GONE)
+                    }
 
                     // 색막대 라벨 채우기
                     val recs = allRecords[date] ?: emptyList()
@@ -129,6 +146,8 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     )
                 } else {
                     rv.setTextViewText(dayId, "")
+                    val holId = res.getIdentifier("hol_$i", "id", pkg)
+                    rv.setViewVisibility(holId, android.view.View.GONE)
                     for (k in 0 until MAX_LABELS) {
                         val labelId = res.getIdentifier("label_${i}_$k", "id", pkg)
                         rv.setViewVisibility(labelId, android.view.View.GONE)

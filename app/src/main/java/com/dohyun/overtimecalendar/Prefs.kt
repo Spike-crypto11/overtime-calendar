@@ -15,6 +15,12 @@ object Prefs {
     private const val KEY_CATS = "categories"
     private const val KEY_URL = "web_app_url"
     private const val KEY_PENDING = "pending"
+    private const val KEY_HOLIDAYS = "holidays"  // {"yyyy-MM-dd":[{kind,name},...]}
+
+    // 특일 종류별 색
+    const val COLOR_HOLIDAY = 0xFFC0392B.toInt() // 공휴일: 빨강
+    const val COLOR_TERM = 0xFF00838F.toInt()    // 24절기: 청록
+    const val COLOR_ANNIV = 0xFF888888.toInt()   // 기념일: 회색
 
     // 팔레트: 항목 색 선택용 10색
     val PALETTE = intArrayOf(
@@ -189,8 +195,52 @@ object Prefs {
         saveAllRecords(ctx, map)
     }
 
+    // ---------- 특일 (공휴일/절기/기념일) ----------
+    fun getAllHolidays(ctx: Context): Map<String, List<Holiday>> {
+        val raw = sp(ctx).getString(KEY_HOLIDAYS, "{}") ?: "{}"
+        val map = HashMap<String, List<Holiday>>()
+        try {
+            val obj = JSONObject(raw)
+            val keys = obj.keys()
+            while (keys.hasNext()) {
+                val date = keys.next()
+                val arr = obj.getJSONArray(date)
+                val list = ArrayList<Holiday>()
+                for (i in 0 until arr.length()) {
+                    val o = arr.getJSONObject(i)
+                    list.add(Holiday(date, o.optString("kind", "anniv"), o.optString("name", "")))
+                }
+                if (list.isNotEmpty()) map[date] = list
+            }
+        } catch (_: Exception) {
+        }
+        return map
+    }
+
+    fun saveHolidays(ctx: Context, holidays: List<Holiday>) {
+        val byDate = HashMap<String, MutableList<Holiday>>()
+        for (h in holidays) byDate.getOrPut(h.date) { ArrayList() }.add(h)
+        val obj = JSONObject()
+        for ((date, list) in byDate) {
+            val arr = JSONArray()
+            for (h in list) {
+                val o = JSONObject()
+                o.put("kind", h.kind)
+                o.put("name", h.name)
+                arr.put(o)
+            }
+            obj.put(date, arr)
+        }
+        sp(ctx).edit().putString(KEY_HOLIDAYS, obj.toString()).apply()
+    }
+
+    fun colorForKind(kind: String): Int = when (kind) {
+        "holiday" -> COLOR_HOLIDAY
+        "term" -> COLOR_TERM
+        else -> COLOR_ANNIV
+    }
+
     // ---------- 전송 대기 ----------
-    fun getPending(ctx: Context): MutableSet<String> =
         HashSet(sp(ctx).getStringSet(KEY_PENDING, emptySet()) ?: emptySet())
     fun addPending(ctx: Context, date: String) {
         val s = getPending(ctx); s.add(date)
