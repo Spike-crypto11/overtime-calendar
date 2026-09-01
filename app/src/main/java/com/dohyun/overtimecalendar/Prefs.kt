@@ -241,6 +241,7 @@ object Prefs {
     }
 
     // ---------- 전송 대기 ----------
+    fun getPending(ctx: Context): MutableSet<String> =
         HashSet(sp(ctx).getStringSet(KEY_PENDING, emptySet()) ?: emptySet())
     fun addPending(ctx: Context, date: String) {
         val s = getPending(ctx); s.add(date)
