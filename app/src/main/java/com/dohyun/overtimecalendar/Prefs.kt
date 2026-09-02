@@ -193,6 +193,8 @@ object Prefs {
         val map = getAllRecords(ctx)
         if (recs.isEmpty()) map.remove(date) else map[date] = recs.toMutableList()
         saveAllRecords(ctx, map)
+        // 저장 직후엔 무조건 전송대기로 표시 → push 성공 전까지 pull이 이 날짜를 못 덮음
+        addPending(ctx, date)
     }
 
     /** 서버에서 받은 한 달치로 로컬의 해당 월 교체 (전송 대기분 보존) */
