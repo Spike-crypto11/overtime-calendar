@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity() {
                 if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
             }
         }
+        // 일정 받아오기
+        SyncManager.pullEvents(this) { ok ->
+            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
+        }
     }
 
     private fun buildWeekdayHeader() {
@@ -98,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         val ndays = DateUtils.daysInMonth(year, month)
         val today = DateUtils.today()
 
-        for (i in 0 until lead) cells.add(CalendarCell(0, "", i % 7, false, emptyList(), emptyList()))
+        for (i in 0 until lead) cells.add(CalendarCell(0, "", i % 7, false, emptyList(), emptyList(), emptyList()))
 
         val sums = HashMap<String, Double>()
         for (d in 1..ndays) {
@@ -106,12 +110,19 @@ class MainActivity : AppCompatActivity() {
             val wd = (lead + d - 1) % 7
             val recs = allRecords[date] ?: emptyList()
             val hols = allHolidays[date] ?: emptyList()
+            val evs = Prefs.eventsOn(this, date)
             for (r in recs) sums[r.categoryId] = (sums[r.categoryId] ?: 0.0) + r.value
-            cells.add(CalendarCell(d, date, wd, date == today, recs, hols))
+            cells.add(CalendarCell(d, date, wd, date == today, recs, hols, evs))
         }
-        while (cells.size % 7 != 0) cells.add(CalendarCell(0, "", cells.size % 7, false, emptyList(), emptyList()))
+        while (cells.size % 7 != 0) cells.add(CalendarCell(0, "", cells.size % 7, false, emptyList(), emptyList(), emptyList()))
 
-        adapter.update(cells, cats)
+        // 공휴일 이름맵 (연휴 대표일 계산용): 날짜 -> 공휴일 이름
+        val holNames = HashMap<String, String>()
+        for ((d, list) in allHolidays) {
+            val h = list.firstOrNull { it.kind == "holiday" }
+            if (h != null) holNames[d] = h.name
+        }
+        adapter.update(cells, cats, holNames)
         renderSums(cats, sums)
     }
 

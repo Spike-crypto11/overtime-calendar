@@ -25,16 +25,49 @@ class CalendarWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == ACTION_REFRESH) {
-            val c = Calendar.getInstance()
-            val prefix = DateUtils.monthPrefix(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1)
-            SyncManager.pullMonth(context, prefix) { updateAll(context) }
+        when (intent.action) {
+            ACTION_PREV -> { shiftMonth(context, -1); updateAll(context) }
+            ACTION_NEXT -> { shiftMonth(context, 1); updateAll(context) }
+            ACTION_TODAY -> { Prefs.clearWidgetYm(context); updateAll(context) }
+            ACTION_REFRESH -> {
+                // 현재 보는 달 기준으로 서버에서 다시 받아오고 갱신
+                val ym = currentYm(context)
+                SyncManager.pullMonth(context, ym) { updateAll(context) }
+                SyncManager.pullHolidays(context) { updateAll(context) }
+            }
         }
+    }
+
+    /** 위젯이 보는 달을 delta만큼 이동해 저장 */
+    private fun shiftMonth(context: Context, delta: Int) {
+        val ym = currentYm(context)
+        var y = ym.substring(0, 4).toInt()
+        var m = ym.substring(5, 7).toInt() + delta
+        if (m < 1) { m = 12; y-- }
+        if (m > 12) { m = 1; y++ }
+        Prefs.setWidgetYm(context, String.format("%04d-%02d", y, m))
+    }
+
+    /** 현재 위젯이 보는 "yyyy-MM" (저장값 없으면 이번 달) */
+    private fun currentYm(context: Context): String {
+        val saved = Prefs.getWidgetYm(context)
+        if (saved.matches(Regex("\\d{4}-\\d{2}"))) return saved
+        val c = Calendar.getInstance()
+        return String.format("%04d-%02d", c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1)
     }
 
     companion object {
         const val ACTION_REFRESH = "com.dohyun.overtimecalendar.WIDGET_REFRESH"
+        const val ACTION_PREV = "com.dohyun.overtimecalendar.WIDGET_PREV"
+        const val ACTION_NEXT = "com.dohyun.overtimecalendar.WIDGET_NEXT"
+        const val ACTION_TODAY = "com.dohyun.overtimecalendar.WIDGET_TODAY"
         private const val MAX_LABELS = 2
+
+        /** 네비게이션 버튼용 PendingIntent */
+        private fun navPi(context: Context, action: String, reqCode: Int): PendingIntent {
+            val intent = Intent(context, CalendarWidgetProvider::class.java).apply { this.action = action }
+            return PendingIntent.getBroadcast(context, reqCode, intent, piFlags())
+        }
 
         fun updateAll(context: Context) {
             val mgr = AppWidgetManager.getInstance(context)
@@ -44,21 +77,33 @@ class CalendarWidgetProvider : AppWidgetProvider() {
 
         private fun renderWidget(context: Context, mgr: AppWidgetManager, widgetId: Int) {
             val rv = RemoteViews(context.packageName, R.layout.widget_calendar)
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH) + 1
+
+            // 보고 있는 달 결정: 저장값 없으면 이번 달
+            val cal = Calendar.getInstance()
+            var year = cal.get(Calendar.YEAR)
+            var month = cal.get(Calendar.MONTH) + 1
+            val savedYm = Prefs.getWidgetYm(context)
+            if (savedYm.matches(Regex("\\d{4}-\\d{2}"))) {
+                year = savedYm.substring(0, 4).toInt()
+                month = savedYm.substring(5, 7).toInt()
+            }
             rv.setTextViewText(R.id.widgetTitle, "${year}년 ${month}월")
 
-            // 새로고침 버튼
-            val refreshIntent = Intent(context, CalendarWidgetProvider::class.java).apply { action = ACTION_REFRESH }
-            rv.setOnClickPendingIntent(
-                R.id.widgetRefresh,
-                PendingIntent.getBroadcast(context, 9999, refreshIntent, piFlags())
-            )
+            // 네비게이션 버튼
+            rv.setOnClickPendingIntent(R.id.widgetPrev, navPi(context, ACTION_PREV, 9001))
+            rv.setOnClickPendingIntent(R.id.widgetNext, navPi(context, ACTION_NEXT, 9002))
+            rv.setOnClickPendingIntent(R.id.widgetToday, navPi(context, ACTION_TODAY, 9003))
+            rv.setOnClickPendingIntent(R.id.widgetRefresh, navPi(context, ACTION_REFRESH, 9004))
 
             val allRecords = Prefs.getAllRecords(context)
             val allHolidays = Prefs.getAllHolidays(context)
             val catMap: Map<String, Category> = Prefs.getCategories(context).associateBy { it.id }
+            // 공휴일 이름맵 (연휴 대표일 계산용)
+            val holNames = HashMap<String, String>()
+            for ((d, list) in allHolidays) {
+                val h = list.firstOrNull { it.kind == "holiday" }
+                if (h != null) holNames[d] = h.name
+            }
             val lead = DateUtils.firstWeekdayIndex(year, month)
             val ndays = DateUtils.daysInMonth(year, month)
             val today = DateUtils.today()
@@ -92,41 +137,48 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         ?: hols.firstOrNull { it.kind == "term" }
                         ?: hols.firstOrNull()
                     if (topHol != null) {
-                        rv.setTextViewText(holId, topHol.name)
-                        rv.setTextColor(holId, Prefs.colorForKind(topHol.kind))
-                        rv.setViewVisibility(holId, android.view.View.VISIBLE)
+                        val showName = if (topHol.kind == "holiday") {
+                            DateUtils.isNameAnchor(topHol.date, topHol.name) { d -> holNames[d] }
+                        } else true
+                        if (showName) {
+                            rv.setTextViewText(holId, topHol.name)
+                            rv.setTextColor(holId, Prefs.colorForKind(topHol.kind))
+                            rv.setViewVisibility(holId, android.view.View.VISIBLE)
+                        } else {
+                            rv.setViewVisibility(holId, android.view.View.GONE)
+                        }
                     } else {
                         rv.setViewVisibility(holId, android.view.View.GONE)
                     }
 
-                    // 색막대 라벨 채우기
+                    // 색막대 라벨 채우기: 일정 먼저, 그다음 기록
                     val recs = allRecords[date] ?: emptyList()
+                    val evs = Prefs.eventsOn(context, date)
+                    // (텍스트, 색, 크기sp) 아이템 목록 구성
+                    val items = ArrayList<Triple<String, Int, Float>>()
+                    for (ev in evs) items.add(Triple(ev.title, ev.color, 12f))
+                    for (r in recs) {
+                        val cat = catMap[r.categoryId] ?: continue
+                        val numPart = if (cat.hasNumber && r.value > 0) " ${fmt(r.value)}" else ""
+                        val text = if (cat.iconOnly) "${cat.emoji}$numPart" else "${cat.emoji}${cat.name}$numPart"
+                        val size = if (cat.iconOnly) 16f else 12f
+                        items.add(Triple(text, cat.color, size))
+                    }
+
                     for (k in 0 until MAX_LABELS) {
                         val labelId = res.getIdentifier("label_${i}_$k", "id", pkg)
-                        if (k < recs.size && k < MAX_LABELS) {
-                            // 마지막 슬롯인데 항목이 더 많으면 "+N"
-                            if (k == MAX_LABELS - 1 && recs.size > MAX_LABELS) {
-                                rv.setTextViewText(labelId, "+${recs.size - (MAX_LABELS - 1)}")
+                        if (k < items.size) {
+                            if (k == MAX_LABELS - 1 && items.size > MAX_LABELS) {
+                                rv.setTextViewText(labelId, "+${items.size - (MAX_LABELS - 1)}")
                                 rv.setInt(labelId, "setBackgroundColor", 0xFF999999.toInt())
                                 rv.setTextColor(labelId, 0xFFFFFFFF.toInt())
+                                rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
                             } else {
-                                val r = recs[k]
-                                val cat = catMap[r.categoryId]
-                                if (cat != null) {
-                                    val numPart = if (cat.hasNumber && r.value > 0) " ${fmt(r.value)}" else ""
-                                    if (cat.iconOnly) {
-                                        // 이름 없이 이모지(+숫자)만, 크게
-                                        rv.setTextViewText(labelId, "${cat.emoji}$numPart")
-                                        rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, 16f)
-                                    } else {
-                                        rv.setTextViewText(labelId, "${cat.emoji}${cat.name}$numPart")
-                                        rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
-                                    }
-                                    rv.setInt(labelId, "setBackgroundColor", cat.color)
-                                    rv.setTextColor(labelId, 0xFFFFFFFF.toInt())
-                                } else {
-                                    rv.setTextViewText(labelId, "")
-                                }
+                                val (text, color, size) = items[k]
+                                rv.setTextViewText(labelId, text)
+                                rv.setInt(labelId, "setBackgroundColor", color)
+                                rv.setTextColor(labelId, 0xFFFFFFFF.toInt())
+                                rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, size)
                             }
                             rv.setViewVisibility(labelId, android.view.View.VISIBLE)
                         } else {

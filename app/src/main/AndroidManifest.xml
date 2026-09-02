@@ -32,6 +32,10 @@
             android:exported="false"/>
 
         <activity
+            android:name=".EventActivity"
+            android:exported="false"/>
+
+        <activity
             android:name=".InputDialogActivity"
             android:exported="true"
             android:theme="@style/Theme.OvertimeCalendar.Dialog"
@@ -45,6 +49,9 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="com.dohyun.overtimecalendar.WIDGET_REFRESH"/>
+                <action android:name="com.dohyun.overtimecalendar.WIDGET_PREV"/>
+                <action android:name="com.dohyun.overtimecalendar.WIDGET_NEXT"/>
+                <action android:name="com.dohyun.overtimecalendar.WIDGET_TODAY"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

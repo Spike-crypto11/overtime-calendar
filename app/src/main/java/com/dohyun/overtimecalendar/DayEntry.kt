@@ -29,6 +29,16 @@ data class Holiday(
     val name: String
 )
 
+/** 사용자 일정 (휴가, 생일 등) */
+data class Event(
+    val id: String,
+    val title: String,
+    val start: String,   // yyyy-MM-dd
+    val end: String,     // yyyy-MM-dd (하루면 start와 동일)
+    val color: Int,
+    val yearly: Boolean  // 매년 반복
+)
+
 /** 달력 한 칸 (빈 칸이면 day=0) */
 data class CalendarCell(
     val day: Int,           // 0 = 이번 달에 속하지 않는 빈 칸
@@ -36,5 +46,6 @@ data class CalendarCell(
     val weekdayIndex: Int,  // 0=일 .. 6=토
     val isToday: Boolean,
     val records: List<DayRecord>,
-    val holidays: List<Holiday> = emptyList()
+    val holidays: List<Holiday> = emptyList(),
+    val events: List<Event> = emptyList()
 )

@@ -37,5 +37,9 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnManageCats).setOnClickListener {
             startActivity(Intent(this, CategoryActivity::class.java))
         }
+
+        findViewById<Button>(R.id.btnManageEvents).setOnClickListener {
+            startActivity(Intent(this, EventActivity::class.java))
+        }
     }
 }

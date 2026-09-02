@@ -137,6 +137,83 @@ object SyncManager {
         }
     }
 
+    /** 일정 목록을 서버에서 받아 로컬 저장 */
+    fun pullEvents(ctx: Context, cb: ((Boolean) -> Unit)? = null) {
+        val base = Prefs.getUrl(ctx)
+        if (base.isEmpty()) { cb?.invoke(false); return }
+        executor.execute {
+            var ok = false
+            try {
+                val res = httpGet(base + "?action=events")
+                val obj = JSONObject(res)
+                if (obj.optBoolean("ok", false)) {
+                    val arr = obj.getJSONArray("events")
+                    val list = ArrayList<Event>()
+                    for (i in 0 until arr.length()) {
+                        val o = arr.getJSONObject(i)
+                        val colorStr = o.optString("color", "2F5496")
+                        val color = try { (0xFF000000.toInt()) or colorStr.toLong(16).toInt() } catch (_: Exception) { 0xFF2F5496.toInt() }
+                        list.add(
+                            Event(
+                                o.getString("id"),
+                                o.optString("title", ""),
+                                o.optString("start", ""),
+                                o.optString("end", o.optString("start", "")),
+                                color,
+                                o.optBoolean("yearly", false)
+                            )
+                        )
+                    }
+                    Prefs.saveEvents(ctx, list)
+                    ok = true
+                }
+            } catch (_: Exception) {
+                ok = false
+            }
+            main.post { cb?.invoke(ok) }
+        }
+    }
+
+    /** 일정 하나 저장 (서버) */
+    fun pushEvent(ctx: Context, e: Event, cb: ((Boolean) -> Unit)? = null) {
+        val base = Prefs.getUrl(ctx)
+        if (base.isEmpty()) { cb?.invoke(false); return }
+        executor.execute {
+            var ok = false
+            try {
+                val colorHex = String.format("%06X", e.color and 0xFFFFFF)
+                val u = base + "?action=saveEvent" +
+                        "&id=" + enc(e.id) +
+                        "&title=" + enc(e.title) +
+                        "&start=" + enc(e.start) +
+                        "&end=" + enc(e.end) +
+                        "&color=" + enc(colorHex) +
+                        "&yearly=" + (if (e.yearly) "true" else "false")
+                val res = httpGet(u)
+                ok = JSONObject(res).optBoolean("ok", false)
+            } catch (_: Exception) {
+                ok = false
+            }
+            main.post { cb?.invoke(ok) }
+        }
+    }
+
+    /** 일정 삭제 (서버) */
+    fun deleteEvent(ctx: Context, id: String, cb: ((Boolean) -> Unit)? = null) {
+        val base = Prefs.getUrl(ctx)
+        if (base.isEmpty()) { cb?.invoke(false); return }
+        executor.execute {
+            var ok = false
+            try {
+                val res = httpGet(base + "?action=deleteEvent&id=" + enc(id))
+                ok = JSONObject(res).optBoolean("ok", false)
+            } catch (_: Exception) {
+                ok = false
+            }
+            main.post { cb?.invoke(ok) }
+        }
+    }
+
     fun flushPending(ctx: Context) {
         val pending = Prefs.getPending(ctx)
         for (date in pending) {

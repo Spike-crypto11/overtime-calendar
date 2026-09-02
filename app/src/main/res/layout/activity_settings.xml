@@ -79,5 +79,12 @@
             android:layout_height="wrap_content"
             android:text="항목 종류 관리 (색·이모지 설정)"/>
 
+        <Button
+            android:id="@+id/btnManageEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내 일정 관리 (휴가·기념일 등)"
+            android:layout_marginTop="12dp"/>
+
     </LinearLayout>
 </ScrollView>

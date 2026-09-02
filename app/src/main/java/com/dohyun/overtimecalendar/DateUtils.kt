@@ -51,4 +51,37 @@ object DateUtils {
 
     /** 이번 달 프리픽스 "yyyy-MM" */
     fun monthPrefix(year: Int, month1: Int): String = String.format("%04d-%02d", year, month1)
+
+    /** 날짜에 하루 더하거나 뺀 yyyy-MM-dd */
+    fun addDays(date: String, delta: Int): String {
+        return try {
+            val p = date.split("-")
+            val c = java.util.Calendar.getInstance()
+            c.clear()
+            c.set(p[0].toInt(), p[1].toInt() - 1, p[2].toInt())
+            c.add(java.util.Calendar.DAY_OF_MONTH, delta)
+            ymd(c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH) + 1, c.get(java.util.Calendar.DAY_OF_MONTH))
+        } catch (_: Exception) {
+            date
+        }
+    }
+
+    /**
+     * 같은 이름의 공휴일이 여러 날 이어질 때(설날·추석 연휴 등),
+     * 이름을 이 날짜에 표시할지 여부. 연속 구간의 "가운데 날"에만 true.
+     * nameOf(date) = 그 날짜의 대표 공휴일 이름(없으면 null)
+     */
+    fun isNameAnchor(date: String, name: String, nameOf: (String) -> String?): Boolean {
+        // 앞뒤로 같은 이름이 며칠씩 이어지는지 센다
+        var back = 0
+        while (nameOf(addDays(date, -(back + 1))) == name) back++
+        var fwd = 0
+        while (nameOf(addDays(date, fwd + 1)) == name) fwd++
+        val total = back + fwd + 1
+        if (total <= 1) return true  // 하루짜리면 그냥 표시
+        // 연속 구간에서 내 위치(0-based)가 가운데인지
+        val myIndex = back
+        val center = total / 2  // 3일이면 index 1(가운데), 2일이면 index 1
+        return myIndex == center
+    }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="제목" android:textStyle="bold"/>
+        <EditText android:id="@+id/etEventTitle" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:inputType="text"
+            android:hint="예: 여름휴가, 엄마 생일" android:importantForAutofill="no"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="시작일" android:textStyle="bold" android:paddingTop="12dp"/>
+        <Button android:id="@+id/btnStartDate" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="날짜 선택"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="종료일 (하루면 시작일과 같게)" android:textStyle="bold" android:paddingTop="12dp"/>
+        <Button android:id="@+id/btnEndDate" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="날짜 선택"/>
+
+        <CheckBox android:id="@+id/cbYearly" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="매년 반복 (생일·기념일)" android:paddingTop="12dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="색" android:textStyle="bold" android:paddingTop="12dp"/>
+        <LinearLayout android:id="@+id/eventColorPalette" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal" android:paddingTop="4dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="end" android:paddingTop="16dp">
+            <Button android:id="@+id/btnEventDelete" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="삭제" android:textColor="@color/sunday"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button android:id="@+id/btnEventCancel" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="취소"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button android:id="@+id/btnEventSave" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="저장" android:textColor="@color/primary"
+                android:textStyle="bold" style="?android:attr/borderlessButtonStyle"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

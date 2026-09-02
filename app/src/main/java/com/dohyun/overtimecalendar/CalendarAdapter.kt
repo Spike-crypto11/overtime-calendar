@@ -15,18 +15,24 @@ class CalendarAdapter(
 ) : RecyclerView.Adapter<CalendarAdapter.VH>() {
 
     private var catMap: Map<String, Category> = categories.associateBy { it.id }
+    // 날짜 -> 대표 공휴일 이름 (연휴 대표일 계산용)
+    private var holidayNames: Map<String, String> = emptyMap()
+
+    private fun holidayNameOf(date: String): String? = holidayNames[date]
 
     class VH(v: View) : RecyclerView.ViewHolder(v) {
         val root: LinearLayout = v.findViewById(R.id.cellRoot)
         val tvDay: TextView = v.findViewById(R.id.tvDay)
         val tvHoliday: TextView = v.findViewById(R.id.tvHoliday)
+        val tvEvent: TextView = v.findViewById(R.id.tvEvent)
         val tvLine1: TextView = v.findViewById(R.id.tvOvertime)
         val tvLine2: TextView = v.findViewById(R.id.tvSpecial)
     }
 
-    fun update(newCells: List<CalendarCell>, newCats: List<Category>) {
+    fun update(newCells: List<CalendarCell>, newCats: List<Category>, holNames: Map<String, String>) {
         cells = newCells
         catMap = newCats.associateBy { it.id }
+        holidayNames = holNames
         notifyDataSetChanged()
     }
 
@@ -44,6 +50,7 @@ class CalendarAdapter(
         if (cell.day == 0) {
             holder.tvDay.text = ""
             holder.tvHoliday.text = ""
+            holder.tvEvent.visibility = View.GONE
             holder.tvLine1.text = ""
             holder.tvLine2.text = ""
             holder.root.setBackgroundColor(0x00000000)
@@ -69,10 +76,27 @@ class CalendarAdapter(
             ?: cell.holidays.firstOrNull { it.kind == "term" }
             ?: cell.holidays.firstOrNull()
         if (topHol != null) {
-            holder.tvHoliday.text = topHol.name
+            // 연휴(같은 이름 연속)면 가운데 날에만 이름 표시, 앞뒤는 빈칸(색만)
+            val showName = if (topHol.kind == "holiday") {
+                DateUtils.isNameAnchor(topHol.date, topHol.name) { d -> holidayNameOf(d) }
+            } else true
+            holder.tvHoliday.text = if (showName) topHol.name else ""
             holder.tvHoliday.setTextColor(Prefs.colorForKind(topHol.kind))
         } else {
             holder.tvHoliday.text = ""
+        }
+
+        // 일정 표시 (첫 일정을 색막대로, 여러 개면 +N)
+        val evs = cell.events
+        if (evs.isNotEmpty()) {
+            val first = evs[0]
+            val extra = if (evs.size > 1) " +${evs.size - 1}" else ""
+            holder.tvEvent.text = first.title + extra
+            holder.tvEvent.setBackgroundColor(first.color)
+            holder.tvEvent.setTextColor(0xFFFFFFFF.toInt())
+            holder.tvEvent.visibility = View.VISIBLE
+        } else {
+            holder.tvEvent.visibility = View.GONE
         }
         holder.root.setBackgroundResource(
             if (cell.isToday) R.drawable.cell_bg_today else R.drawable.cell_bg

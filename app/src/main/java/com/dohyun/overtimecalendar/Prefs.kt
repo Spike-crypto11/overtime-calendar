@@ -16,6 +16,8 @@ object Prefs {
     private const val KEY_URL = "web_app_url"
     private const val KEY_PENDING = "pending"
     private const val KEY_HOLIDAYS = "holidays"  // {"yyyy-MM-dd":[{kind,name},...]}
+    private const val KEY_WIDGET_YM = "widget_ym" // 위젯이 보고 있는 달 "yyyy-MM"
+    private const val KEY_EVENTS = "events"      // [{id,title,start,end,color,yearly},...]
 
     // 특일 종류별 색
     const val COLOR_HOLIDAY = 0xFFC0392B.toInt() // 공휴일: 빨강
@@ -42,6 +44,12 @@ object Prefs {
     // ---------- 서버 URL ----------
     fun getUrl(ctx: Context): String = sp(ctx).getString(KEY_URL, "") ?: ""
     fun setUrl(ctx: Context, url: String) { sp(ctx).edit().putString(KEY_URL, url.trim()).apply() }
+
+    // ---------- 위젯이 보고 있는 달 ----------
+    /** "yyyy-MM" 형식. 없으면 빈 문자열(=이번 달 의미) */
+    fun getWidgetYm(ctx: Context): String = sp(ctx).getString(KEY_WIDGET_YM, "") ?: ""
+    fun setWidgetYm(ctx: Context, ym: String) { sp(ctx).edit().putString(KEY_WIDGET_YM, ym).apply() }
+    fun clearWidgetYm(ctx: Context) { sp(ctx).edit().remove(KEY_WIDGET_YM).apply() }
 
     // ---------- 카테고리 ----------
     /** 기본 카테고리(최초 실행 시): 잔업 🕒 초록, 특근 📋 주황 */
@@ -238,6 +246,74 @@ object Prefs {
         "holiday" -> COLOR_HOLIDAY
         "term" -> COLOR_TERM
         else -> COLOR_ANNIV
+    }
+
+    // ---------- 일정 (Events) ----------
+    fun getEvents(ctx: Context): MutableList<Event> {
+        val raw = sp(ctx).getString(KEY_EVENTS, "[]") ?: "[]"
+        val list = ArrayList<Event>()
+        try {
+            val arr = JSONArray(raw)
+            for (i in 0 until arr.length()) {
+                val o = arr.getJSONObject(i)
+                list.add(
+                    Event(
+                        o.getString("id"),
+                        o.optString("title", ""),
+                        o.optString("start", ""),
+                        o.optString("end", o.optString("start", "")),
+                        o.optInt("color", 0xFF2F5496.toInt()),
+                        o.optBoolean("yearly", false)
+                    )
+                )
+            }
+        } catch (_: Exception) {
+        }
+        return list
+    }
+
+    fun saveEvents(ctx: Context, events: List<Event>) {
+        val arr = JSONArray()
+        for (e in events) {
+            val o = JSONObject()
+            o.put("id", e.id)
+            o.put("title", e.title)
+            o.put("start", e.start)
+            o.put("end", e.end)
+            o.put("color", e.color)
+            o.put("yearly", e.yearly)
+            arr.put(o)
+        }
+        sp(ctx).edit().putString(KEY_EVENTS, arr.toString()).apply()
+    }
+
+    fun upsertEvent(ctx: Context, e: Event) {
+        val list = getEvents(ctx)
+        val idx = list.indexOfFirst { it.id == e.id }
+        if (idx >= 0) list[idx] = e else list.add(e)
+        saveEvents(ctx, list)
+    }
+
+    fun deleteEvent(ctx: Context, id: String) {
+        val list = getEvents(ctx)
+        list.removeAll { it.id == id }
+        saveEvents(ctx, list)
+    }
+
+    /** 특정 날짜(yyyy-MM-dd)에 걸리는 일정들 (기간·매년반복 처리) */
+    fun eventsOn(ctx: Context, date: String): List<Event> {
+        val list = getEvents(ctx)
+        val result = ArrayList<Event>()
+        val mmdd = if (date.length == 10) date.substring(5) else ""
+        for (e in list) {
+            if (e.yearly) {
+                // 연도 무시, 월-일만 매칭 (매년반복은 하루 기준)
+                if (e.start.length == 10 && e.start.substring(5) == mmdd) result.add(e)
+            } else {
+                if (e.start.isNotEmpty() && date >= e.start && date <= e.end) result.add(e)
+            }
+        }
+        return result
     }
 
     // ---------- 전송 대기 ----------
