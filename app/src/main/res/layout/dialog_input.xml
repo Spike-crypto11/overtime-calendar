@@ -23,15 +23,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
 
-    <TextView
-        android:id="@+id/tvManageCats"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="+ 항목 종류 관리"
-        android:textColor="@color/primary"
-        android:textSize="13sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="6dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvManageCats"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="+ 항목 종류 관리"
+            android:textColor="@color/primary"
+            android:textSize="13sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/tvOpenApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📅 앱 열기"
+            android:textColor="@color/primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:paddingTop="10dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="12dp"/>
+    </LinearLayout>
 
     <!-- 버튼: 가로 배치, 글자 안 쪼개지게 -->
     <LinearLayout

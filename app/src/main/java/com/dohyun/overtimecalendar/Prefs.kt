@@ -197,12 +197,12 @@ object Prefs {
 
     /** 서버에서 받은 한 달치로 로컬의 해당 월 교체 (전송 대기분 보존) */
     fun replaceMonth(ctx: Context, monthPrefix: String, serverRecords: Map<String, List<DayRecord>>) {
+        // 병합 방식: 서버에 있는 날짜는 서버 값으로 갱신하되,
+        // 로컬에만 있는(아직 서버 미반영) 날짜는 지우지 않음 → 방금 저장한 게 사라지지 않음.
         val map = getAllRecords(ctx)
         val pending = getPending(ctx)
-        val toRemove = map.keys.filter { it.startsWith(monthPrefix) && !pending.contains(it) }
-        for (k in toRemove) map.remove(k)
         for ((date, recs) in serverRecords) {
-            if (pending.contains(date)) continue
+            if (pending.contains(date)) continue  // 전송 대기중인 건 로컬 우선
             if (recs.isNotEmpty()) map[date] = recs.toMutableList()
         }
         saveAllRecords(ctx, map)

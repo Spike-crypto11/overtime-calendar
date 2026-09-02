@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnNext).setOnClickListener { changeMonth(1) }
         tvMonthTitle.setOnClickListener { showMonthPicker() }
         findViewById<Button>(R.id.btnToday).setOnClickListener { goToday() }
+        findViewById<Button>(R.id.btnRefresh).setOnClickListener { refreshAll() }
         findViewById<Button>(R.id.btnSettings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
@@ -81,6 +82,21 @@ class MainActivity : AppCompatActivity() {
             tv.setTextColor(ContextCompat.getColor(this, col))
             header.addView(tv)
         }
+    }
+
+    /** 서버에서 기록·특일·일정 강제 새로고침 */
+    private fun refreshAll() {
+        SyncManager.flushPending(this)
+        SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
+            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
+        }
+        SyncManager.pullHolidays(this) { ok ->
+            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
+        }
+        SyncManager.pullEvents(this) { ok ->
+            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
+        }
+        android.widget.Toast.makeText(this, "새로고침 중...", android.widget.Toast.LENGTH_SHORT).show()
     }
 
     /** 이번 달로 이동 */

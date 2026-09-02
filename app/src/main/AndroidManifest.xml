@@ -40,8 +40,7 @@
             android:exported="true"
             android:theme="@style/Theme.OvertimeCalendar.Dialog"
             android:excludeFromRecents="true"
-            android:taskAffinity=""
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTop"/>
 
         <receiver
             android:name=".widget.CalendarWidgetProvider"

@@ -14,4 +14,8 @@
     <color name="header_sun">#C0392B</color>
     <color name="header_sat">#1F5F9E</color>
     <color name="muted">#999999</color>
+    <color name="topbar_nav">#BBDEFB</color>
+    <color name="topbar_today">#FFE082</color>
+    <color name="topbar_refresh">#A5D6A7</color>
+    <color name="topbar_settings">#F8BBD0</color>
 </resources>

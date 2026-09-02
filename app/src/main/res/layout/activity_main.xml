@@ -16,10 +16,12 @@
 
         <Button
             android:id="@+id/btnPrev"
-            android:layout_width="48dp"
+            android:layout_width="44dp"
             android:layout_height="48dp"
             android:text="@string/prev_month"
-            android:textColor="@color/on_primary"
+            android:textColor="@color/topbar_nav"
+            android:textSize="18sp"
+            android:minWidth="0dp"
             style="?android:attr/borderlessButtonStyle"/>
 
         <TextView
@@ -35,10 +37,12 @@
 
         <Button
             android:id="@+id/btnNext"
-            android:layout_width="48dp"
+            android:layout_width="44dp"
             android:layout_height="48dp"
             android:text="@string/next_month"
-            android:textColor="@color/on_primary"
+            android:textColor="@color/topbar_nav"
+            android:textSize="18sp"
+            android:minWidth="0dp"
             style="?android:attr/borderlessButtonStyle"/>
 
         <Button
@@ -46,12 +50,25 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:text="오늘"
-            android:textColor="@color/on_primary"
+            android:textColor="@color/topbar_today"
             android:textSize="14sp"
             android:textStyle="bold"
             android:minWidth="0dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="↻"
+            android:textColor="@color/topbar_refresh"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:minWidth="0dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
             style="?android:attr/borderlessButtonStyle"/>
 
         <Button
@@ -59,8 +76,11 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:text="⚙"
-            android:textColor="@color/on_primary"
+            android:textColor="@color/topbar_settings"
             android:textSize="18sp"
+            android:minWidth="0dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="4dp"
             style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
 
