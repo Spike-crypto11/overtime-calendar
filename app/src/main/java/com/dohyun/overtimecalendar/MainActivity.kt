@@ -209,10 +209,89 @@ class MainActivity : AppCompatActivity() {
 
     private fun openInput(date: String) {
         if (date.isEmpty()) return
-        val i = Intent(this, InputDialogActivity::class.java)
-        i.putExtra(InputDialogActivity.EXTRA_DATE, date)
-        startActivity(i)
+        showInputDialog(date)
     }
+
+    /** 날짜 입력 다이얼로그 (앱 내부에서 직접 → 저장 후 즉시 갱신됨) */
+    private fun showInputDialog(date: String) {
+        val view = layoutInflater.inflate(R.layout.dialog_input, null)
+        val container = view.findViewById<LinearLayout>(R.id.itemContainer)
+        view.findViewById<TextView>(R.id.tvDialogTitle).text = DateUtils.withWeekday(date)
+
+        val cats = Prefs.getCategories(this)
+        val existing = Prefs.getRecords(this, date).associateBy { it.categoryId }
+        val checkBoxes = HashMap<String, android.widget.CheckBox>()
+        val valueInputs = HashMap<String, android.widget.EditText>()
+
+        for (cat in cats) {
+            val row = LinearLayout(this)
+            row.orientation = LinearLayout.HORIZONTAL
+            row.gravity = Gravity.CENTER_VERTICAL
+            row.setPadding(0, dpM(4), 0, dpM(4))
+
+            val cb = android.widget.CheckBox(this)
+            cb.text = "${cat.emoji} ${cat.name}"
+            cb.textSize = 15f
+            cb.setTextColor(cat.color)
+            cb.setSingleLine(true)
+            val rec = existing[cat.id]
+            cb.isChecked = rec != null
+            cb.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            checkBoxes[cat.id] = cb
+            row.addView(cb)
+
+            if (cat.hasNumber) {
+                val et = android.widget.EditText(this)
+                et.inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+                et.hint = "시간"
+                et.setSingleLine(true)
+                et.layoutParams = LinearLayout.LayoutParams(dpM(70), LinearLayout.LayoutParams.WRAP_CONTENT)
+                when {
+                    rec != null && rec.value > 0 -> et.setText(fmt(rec.value))
+                    cb.isChecked && cat.defaultValue > 0 -> et.setText(fmt(cat.defaultValue))
+                    else -> et.setText("")
+                }
+                valueInputs[cat.id] = et
+                row.addView(et)
+                cb.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked && et.text.toString().isBlank() && cat.defaultValue > 0) et.setText(fmt(cat.defaultValue))
+                }
+            }
+            container.addView(row)
+        }
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this).setView(view).create()
+
+        view.findViewById<TextView>(R.id.tvManageCats).setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(this, CategoryActivity::class.java))
+        }
+        view.findViewById<Button>(R.id.btnCancel).setOnClickListener { dialog.dismiss() }
+        view.findViewById<Button>(R.id.btnSave).setOnClickListener {
+            val records = ArrayList<DayRecord>()
+            for (cat in cats) {
+                val cb = checkBoxes[cat.id] ?: continue
+                if (!cb.isChecked) continue
+                val value = if (cat.hasNumber) parseNum(valueInputs[cat.id]?.text?.toString() ?: "") else 0.0
+                records.add(DayRecord(cat.id, value))
+            }
+            Prefs.setRecords(this, date, records)
+            SyncManager.push(this, date, records, null)
+            CalendarWidgetProvider.updateAll(this)
+            render()  // ★ 저장 즉시 앱 달력 갱신
+            dialog.dismiss()
+            android.widget.Toast.makeText(this, "저장되었습니다", android.widget.Toast.LENGTH_SHORT).show()
+        }
+        dialog.show()
+    }
+
+    private fun parseNum(s: String): Double {
+        val t = s.trim()
+        if (t.isEmpty()) return 0.0
+        return try { t.toDouble().coerceAtLeast(0.0) } catch (_: Exception) { 0.0 }
+    }
+
+    private fun dpM(v: Int): Int = (v * resources.displayMetrics.density).toInt()
 
     private fun fmt(v: Double): String =
         if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
