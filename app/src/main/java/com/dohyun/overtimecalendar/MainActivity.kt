@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnPrev).setOnClickListener { changeMonth(-1) }
         findViewById<Button>(R.id.btnNext).setOnClickListener { changeMonth(1) }
         tvMonthTitle.setOnClickListener { showMonthPicker() }
+        findViewById<Button>(R.id.btnToday).setOnClickListener { goToday() }
         findViewById<Button>(R.id.btnSettings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
@@ -82,6 +83,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /** 이번 달로 이동 */
+    private fun goToday() {
+        val c = Calendar.getInstance()
+        year = c.get(Calendar.YEAR)
+        month = c.get(Calendar.MONTH) + 1
+        render()
+        SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok -> if (ok) render() }
+    }
+
     /** 상단 제목 클릭 → 연/월 선택 */
     private fun showMonthPicker() {
         val ctx = this
@@ -118,13 +128,7 @@ class MainActivity : AppCompatActivity() {
                 SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok -> if (ok) render() }
             }
             .setNegativeButton("취소", null)
-            .setNeutralButton("오늘") { _, _ ->
-                val c = Calendar.getInstance()
-                year = c.get(Calendar.YEAR)
-                month = c.get(Calendar.MONTH) + 1
-                render()
-                SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok -> if (ok) render() }
-            }
+            .setNeutralButton("오늘") { _, _ -> goToday() }
             .show()
     }
 
