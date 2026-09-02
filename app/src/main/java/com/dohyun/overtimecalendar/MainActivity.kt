@@ -55,11 +55,9 @@ class MainActivity : AppCompatActivity() {
         SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
             if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
-        // 특일이 아직 없으면 받아오기
-        if (Prefs.getAllHolidays(this).isEmpty()) {
-            SyncManager.pullHolidays(this) { ok ->
-                if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
-            }
+        // 특일을 항상 재시도 (이미 있어도 조용히 최신화)
+        SyncManager.pullHolidays(this) { ok ->
+            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
         // 일정 받아오기
         SyncManager.pullEvents(this) { ok ->

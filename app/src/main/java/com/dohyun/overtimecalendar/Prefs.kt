@@ -42,7 +42,12 @@ object Prefs {
         ctx.applicationContext.getSharedPreferences(PREF, Context.MODE_PRIVATE)
 
     // ---------- 서버 URL ----------
-    fun getUrl(ctx: Context): String = sp(ctx).getString(KEY_URL, "") ?: ""
+    // 기본 URL을 앱에 내장 → 설치하면 바로 동작 (연결 테스트/입력 불필요)
+    private const val DEFAULT_URL = "https://script.google.com/macros/s/AKfycbxJprMFInMNr2YfbmLvrAhgikB9H6hunClhWIU3RXz_0aXJ82md-wMt1FVQyqenUf6wCg/exec"
+    fun getUrl(ctx: Context): String {
+        val saved = sp(ctx).getString(KEY_URL, "") ?: ""
+        return if (saved.isNotEmpty()) saved else DEFAULT_URL
+    }
     fun setUrl(ctx: Context, url: String) { sp(ctx).edit().putString(KEY_URL, url.trim()).apply() }
 
     // ---------- 위젯이 보고 있는 달 ----------
