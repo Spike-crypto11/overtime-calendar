@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnPrev).setOnClickListener { changeMonth(-1) }
         findViewById<Button>(R.id.btnNext).setOnClickListener { changeMonth(1) }
+        tvMonthTitle.setOnClickListener { showMonthPicker() }
         findViewById<Button>(R.id.btnSettings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
@@ -79,6 +80,52 @@ class MainActivity : AppCompatActivity() {
             tv.setTextColor(ContextCompat.getColor(this, col))
             header.addView(tv)
         }
+    }
+
+    /** 상단 제목 클릭 → 연/월 선택 */
+    private fun showMonthPicker() {
+        val ctx = this
+        val container = LinearLayout(ctx)
+        container.orientation = LinearLayout.HORIZONTAL
+        container.gravity = Gravity.CENTER
+        val pad = (16 * resources.displayMetrics.density).toInt()
+        container.setPadding(pad, pad, pad, pad)
+
+        val yearPicker = android.widget.NumberPicker(ctx)
+        yearPicker.minValue = 2020
+        yearPicker.maxValue = 2035
+        yearPicker.value = year
+
+        val monthPicker = android.widget.NumberPicker(ctx)
+        monthPicker.minValue = 1
+        monthPicker.maxValue = 12
+        monthPicker.value = month
+
+        val yl = TextView(ctx); yl.text = "년 "; yl.textSize = 16f
+        val ml = TextView(ctx); ml.text = "월"; ml.textSize = 16f
+        container.addView(yearPicker)
+        container.addView(yl)
+        container.addView(monthPicker)
+        container.addView(ml)
+
+        androidx.appcompat.app.AlertDialog.Builder(ctx)
+            .setTitle("연·월 선택")
+            .setView(container)
+            .setPositiveButton("이동") { _, _ ->
+                year = yearPicker.value
+                month = monthPicker.value
+                render()
+                SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok -> if (ok) render() }
+            }
+            .setNegativeButton("취소", null)
+            .setNeutralButton("오늘") { _, _ ->
+                val c = Calendar.getInstance()
+                year = c.get(Calendar.YEAR)
+                month = c.get(Calendar.MONTH) + 1
+                render()
+                SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok -> if (ok) render() }
+            }
+            .show()
     }
 
     private fun changeMonth(delta: Int) {

@@ -89,6 +89,15 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             }
             rv.setTextViewText(R.id.widgetTitle, "${year}년 ${month}월")
 
+            // 제목(년월)을 누르면 앱 열기
+            val openAppIntent = Intent(context, com.dohyun.overtimecalendar.MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            rv.setOnClickPendingIntent(
+                R.id.widgetTitle,
+                PendingIntent.getActivity(context, 9005, openAppIntent, piFlags())
+            )
+
             // 네비게이션 버튼
             rv.setOnClickPendingIntent(R.id.widgetPrev, navPi(context, ACTION_PREV, 9001))
             rv.setOnClickPendingIntent(R.id.widgetNext, navPi(context, ACTION_NEXT, 9002))
