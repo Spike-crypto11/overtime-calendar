@@ -124,14 +124,14 @@ class CalendarAdapter(
         if (rec == null) { tv.text = ""; return }
         val cat = catMap[rec.categoryId]
         if (cat == null) { tv.text = ""; return }
-        val valStr = if (cat.hasNumber && rec.value > 0) " ${fmt(rec.value)}" else ""
-        if (cat.iconOnly) {
-            tv.text = "${cat.emoji}$valStr"
-            tv.textSize = 16f
-        } else {
-            tv.text = "${cat.emoji}$valStr"
-            tv.textSize = 15f
+        val valStr = if (cat.hasNumber && rec.value > 0) fmt(rec.value) else ""
+        // 표시 텍스트: 이모지 우선, 없으면 이름. 숫자 있으면 뒤에 붙임.
+        val label = when {
+            cat.emoji.isNotBlank() -> cat.emoji + (if (valStr.isNotEmpty()) " $valStr" else "")
+            else -> cat.name + (if (valStr.isNotEmpty()) " $valStr" else "")
         }
+        tv.text = label
+        tv.textSize = if (cat.iconOnly && cat.emoji.isNotBlank()) 16f else 13f
         tv.setTextColor(cat.color)
     }
 

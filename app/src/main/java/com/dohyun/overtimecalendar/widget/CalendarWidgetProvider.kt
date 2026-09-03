@@ -168,8 +168,12 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     for (r in recs) {
                         val cat = catMap[r.categoryId] ?: continue
                         val numPart = if (cat.hasNumber && r.value > 0) " ${fmt(r.value)}" else ""
-                        val text = if (cat.iconOnly) "${cat.emoji}$numPart" else "${cat.emoji}${cat.name}$numPart"
-                        val size = if (cat.iconOnly) 16f else 12f
+                        val text = when {
+                            cat.iconOnly && cat.emoji.isNotBlank() -> "${cat.emoji}$numPart"
+                            cat.emoji.isNotBlank() -> "${cat.emoji}${cat.name}$numPart"
+                            else -> "${cat.name}$numPart"
+                        }
+                        val size = if (cat.iconOnly && cat.emoji.isNotBlank()) 16f else 12f
                         items.add(Triple(text, cat.color, size))
                     }
 
