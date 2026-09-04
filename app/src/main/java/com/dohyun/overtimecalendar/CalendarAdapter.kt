@@ -51,8 +51,11 @@ class CalendarAdapter(
             holder.tvDay.text = ""
             holder.tvHoliday.text = ""
             holder.tvEvent.visibility = View.GONE
+            holder.tvEvent.background = null
             holder.tvLine1.text = ""
+            holder.tvLine1.background = null
             holder.tvLine2.text = ""
+            holder.tvLine2.background = null
             holder.root.setBackgroundColor(0x00000000)
             holder.root.setOnClickListener(null)
             holder.root.isClickable = false
@@ -111,7 +114,9 @@ class CalendarAdapter(
         // 3개 이상이면 두번째 줄에 "+N" 표시
         if (recs.size > 2) {
             holder.tvLine2.text = "+${recs.size - 1}"
-            holder.tvLine2.setTextColor(0xFF888888.toInt())
+            holder.tvLine2.setBackgroundColor(0xFF999999.toInt())
+            holder.tvLine2.setTextColor(0xFFFFFFFF.toInt())
+            holder.tvLine2.textSize = 12f
         } else {
             bindLine(holder.tvLine2, line2)
         }
@@ -121,18 +126,29 @@ class CalendarAdapter(
     }
 
     private fun bindLine(tv: TextView, rec: DayRecord?) {
-        if (rec == null) { tv.text = ""; return }
+        if (rec == null) {
+            tv.text = ""
+            tv.background = null
+            return
+        }
         val cat = catMap[rec.categoryId]
-        if (cat == null) { tv.text = ""; return }
+        if (cat == null) {
+            tv.text = ""
+            tv.background = null
+            return
+        }
         val valStr = if (cat.hasNumber && rec.value > 0) fmt(rec.value) else ""
         // 표시 텍스트: 이모지 우선, 없으면 이름. 숫자 있으면 뒤에 붙임.
         val label = when {
+            cat.iconOnly && cat.emoji.isNotBlank() -> cat.emoji + (if (valStr.isNotEmpty()) " $valStr" else "")
             cat.emoji.isNotBlank() -> cat.emoji + (if (valStr.isNotEmpty()) " $valStr" else "")
             else -> cat.name + (if (valStr.isNotEmpty()) " $valStr" else "")
         }
         tv.text = label
-        tv.textSize = if (cat.iconOnly && cat.emoji.isNotBlank()) 16f else 13f
-        tv.setTextColor(cat.color)
+        tv.textSize = 12f
+        // 색막대: 배경을 카테고리 색으로 채우고 글자는 흰색 (위젯과 동일)
+        tv.setBackgroundColor(cat.color)
+        tv.setTextColor(0xFFFFFFFF.toInt())
     }
 
     private fun fmt(v: Double): String =
