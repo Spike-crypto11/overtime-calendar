@@ -45,6 +45,12 @@ class InputDialogActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvManageCats).setOnClickListener {
             startActivity(Intent(this, CategoryActivity::class.java))
         }
+        findViewById<TextView>(R.id.tvOpenApp).setOnClickListener {
+            val i = Intent(this, EventActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+            finish()
+        }
         findViewById<Button>(R.id.btnSave).setOnClickListener { save() }
         findViewById<Button>(R.id.btnCancel).setOnClickListener { finish() }
     }
