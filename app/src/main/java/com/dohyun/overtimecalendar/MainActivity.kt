@@ -266,6 +266,10 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
             startActivity(Intent(this, CategoryActivity::class.java))
         }
+        view.findViewById<TextView>(R.id.tvOpenApp).setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(this, EventActivity::class.java))
+        }
         view.findViewById<Button>(R.id.btnCancel).setOnClickListener { dialog.dismiss() }
         view.findViewById<Button>(R.id.btnSave).setOnClickListener {
             val records = ArrayList<DayRecord>()

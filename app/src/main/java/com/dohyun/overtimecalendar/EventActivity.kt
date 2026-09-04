@@ -32,8 +32,9 @@ class EventActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // 서버에서 최신 일정 받아와 갱신
-        SyncManager.pullEvents(this) { renderList() }
+        renderList()
+        // 서버에서 최신 일정 받아와 갱신 (액티비티 살아있을 때만)
+        SyncManager.pullEvents(this) { if (!isFinishing && !isDestroyed) renderList() }
     }
 
     private fun renderList() {
