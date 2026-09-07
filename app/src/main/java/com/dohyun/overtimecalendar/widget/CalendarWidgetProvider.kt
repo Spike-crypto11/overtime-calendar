@@ -89,6 +89,17 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             }
             rv.setTextViewText(R.id.widgetTitle, "${year}년 ${month}월")
 
+            // 앱과 같은 테마색을 헤더에 적용
+            val barColor = Prefs.themeBarColor(context)
+            val textColor = Prefs.themeTextColor(context)
+            rv.setInt(R.id.widgetHeader, "setBackgroundColor", barColor)
+            rv.setTextColor(R.id.widgetTitle, textColor)
+            rv.setTextColor(R.id.widgetPrev, textColor)
+            rv.setTextColor(R.id.widgetNext, textColor)
+            rv.setTextColor(R.id.widgetToday, 0xFFE8590C.toInt())
+            rv.setTextColor(R.id.widgetRefresh, textColor)
+            rv.setTextColor(R.id.widgetOpenApp, textColor)
+
             // 제목(년월)과 📱 버튼을 누르면 앱 열기
             val openAppIntent = Intent(context, com.dohyun.overtimecalendar.MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)

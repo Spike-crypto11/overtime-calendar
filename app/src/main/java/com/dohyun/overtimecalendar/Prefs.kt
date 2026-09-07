@@ -18,6 +18,14 @@ object Prefs {
     private const val KEY_HOLIDAYS = "holidays"  // {"yyyy-MM-dd":[{kind,name},...]}
     private const val KEY_WIDGET_YM = "widget_ym" // 위젯이 보고 있는 달 "yyyy-MM"
     private const val KEY_EVENTS = "events"      // [{id,title,start,end,color,yearly},...]
+    private const val KEY_THEME = "theme_p"      // 랜덤 테마 "p1"/"p2"
+
+    // 테마 색 (앱·위젯 공용)
+    fun getTheme(ctx: Context): String = sp(ctx).getString(KEY_THEME, "p1") ?: "p1"
+    fun setTheme(ctx: Context, t: String) { sp(ctx).edit().putString(KEY_THEME, t).apply() }
+    fun themeBarColor(ctx: Context): Int = if (getTheme(ctx) == "p2") 0xFFC3E8DD.toInt() else 0xFFF3D9B1.toInt()
+    fun themeWeekBg(ctx: Context): Int = if (getTheme(ctx) == "p2") 0xFFE6F7F1.toInt() else 0xFFFDF3E7.toInt()
+    fun themeTextColor(ctx: Context): Int = if (getTheme(ctx) == "p2") 0xFF087F5B.toInt() else 0xFF5F3DC4.toInt()
 
     // 특일 종류별 색
     const val COLOR_HOLIDAY = 0xFFC0392B.toInt() // 공휴일: 빨강
