@@ -138,15 +138,16 @@ class CalendarAdapter(
             return
         }
         val valStr = if (cat.hasNumber && rec.value > 0) fmt(rec.value) else ""
-        // 표시 텍스트: 이모지 우선, 없으면 이름. 숫자 있으면 뒤에 붙임.
+        // 표시 텍스트: 숫자 항목(잔업·특근)은 이름 빼고 이모지+숫자만, 그 외는 이름
         val label = when {
-            cat.iconOnly && cat.emoji.isNotBlank() -> cat.emoji + (if (valStr.isNotEmpty()) " $valStr" else "")
-            cat.emoji.isNotBlank() -> cat.emoji + (if (valStr.isNotEmpty()) " $valStr" else "")
-            else -> cat.name + (if (valStr.isNotEmpty()) " $valStr" else "")
+            cat.hasNumber && cat.emoji.isNotBlank() -> cat.emoji + (if (valStr.isNotEmpty()) " $valStr" else "")
+            cat.hasNumber -> valStr
+            cat.iconOnly && cat.emoji.isNotBlank() -> cat.emoji
+            cat.emoji.isNotBlank() -> cat.emoji + " " + cat.name
+            else -> cat.name
         }
         tv.text = label
         tv.textSize = 12f
-        // 색막대: 배경을 카테고리 색으로 채우고 글자는 흰색 (위젯과 동일)
         tv.setBackgroundColor(cat.color)
         tv.setTextColor(0xFFFFFFFF.toInt())
     }

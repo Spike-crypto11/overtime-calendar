@@ -18,4 +18,10 @@
     <color name="topbar_today">#FFE082</color>
     <color name="topbar_refresh">#A5D6A7</color>
     <color name="topbar_settings">#F8BBD0</color>
+    <!-- 랜덤 파스텔 테마 -->
+    <color name="theme_p1_bar">#F3D9B1</color>
+    <color name="theme_p1_weekbg">#FDF3E7</color>
+    <color name="theme_p2_bar">#C3E8DD</color>
+    <color name="theme_p2_weekbg">#E6F7F1</color>
+    <color name="theme_p_text">#5F3DC4</color>
 </resources>

@@ -169,11 +169,16 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         val cat = catMap[r.categoryId] ?: continue
                         val numPart = if (cat.hasNumber && r.value > 0) " ${fmt(r.value)}" else ""
                         val text = when {
-                            cat.iconOnly && cat.emoji.isNotBlank() -> "${cat.emoji}$numPart"
-                            cat.emoji.isNotBlank() -> "${cat.emoji}${cat.name}$numPart"
-                            else -> "${cat.name}$numPart"
+                            // 숫자 항목(잔업·특근): 이름 빼고 이모지+숫자만 → 안 잘림
+                            cat.hasNumber && cat.emoji.isNotBlank() -> "${cat.emoji}$numPart"
+                            cat.hasNumber -> numPart.trim()
+                            // 아이콘 전용
+                            cat.iconOnly && cat.emoji.isNotBlank() -> cat.emoji
+                            // 그 외(반차·휴가 등): 이름 표시
+                            cat.emoji.isNotBlank() -> "${cat.emoji}${cat.name}"
+                            else -> cat.name
                         }
-                        val size = if (cat.iconOnly && cat.emoji.isNotBlank()) 16f else 12f
+                        val size = if ((cat.hasNumber || cat.iconOnly) && cat.emoji.isNotBlank()) 15f else 12f
                         items.add(Triple(text, cat.color, size))
                     }
 

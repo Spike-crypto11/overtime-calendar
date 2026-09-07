@@ -16,6 +16,8 @@ import java.util.Calendar
 class MainActivity : AppCompatActivity() {
 
     private var year = 0
+    private var themeBarColor = 0xFFF3D9B1.toInt()
+    private var themeWeekBg = 0xFFFDF3E7.toInt()
     private var month = 0
 
     private lateinit var tvMonthTitle: TextView
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         sumContainer = findViewById(R.id.sumContainer)
         recycler = findViewById(R.id.recyclerCalendar)
 
+        applyRandomTheme()
         buildWeekdayHeader()
 
         adapter = CalendarAdapter(emptyList(), Prefs.getCategories(this)) { cell -> openInput(cell.date) }
@@ -68,8 +71,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /** 앱 켤 때마다 P1(크림)/P2(민트) 중 랜덤으로 상단 테마 적용 */
+    private fun applyRandomTheme() {
+        val p1 = (0..1).random() == 0
+        themeBarColor = if (p1) 0xFFF3D9B1.toInt() else 0xFFC3E8DD.toInt()
+        themeWeekBg = if (p1) 0xFFFDF3E7.toInt() else 0xFFE6F7F1.toInt()
+        val titleColor = if (p1) 0xFF5F3DC4.toInt() else 0xFF087F5B.toInt()
+
+        findViewById<LinearLayout>(R.id.topBar).setBackgroundColor(themeBarColor)
+        tvMonthTitle.setTextColor(titleColor)
+        // 버튼 글자색도 테마에 맞게 (파스텔 배경이라 진한 색으로)
+        findViewById<Button>(R.id.btnPrev).setTextColor(titleColor)
+        findViewById<Button>(R.id.btnNext).setTextColor(titleColor)
+        findViewById<Button>(R.id.btnToday).setTextColor(0xFFE8590C.toInt())
+        findViewById<Button>(R.id.btnRefresh).setTextColor(titleColor)
+        findViewById<Button>(R.id.btnSettings).setTextColor(titleColor)
+    }
+
     private fun buildWeekdayHeader() {
         val header = findViewById<LinearLayout>(R.id.weekdayHeader)
+        header.setBackgroundColor(themeWeekBg)
         header.removeAllViews()
         for (i in 0..6) {
             val tv = TextView(this)
