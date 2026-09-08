@@ -62,6 +62,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
         const val ACTION_NEXT = "com.dohyun.overtimecalendar.WIDGET_NEXT"
         const val ACTION_TODAY = "com.dohyun.overtimecalendar.WIDGET_TODAY"
         private const val MAX_LABELS = 2
+        private val requestedYears = HashSet<String>()  // 공휴일 요청한 해(중복 요청 방지)
 
         /** 네비게이션 버튼용 PendingIntent */
         private fun navPi(context: Context, action: String, reqCode: Int): PendingIntent {
@@ -116,6 +117,16 @@ class CalendarWidgetProvider : AppWidgetProvider() {
 
             val allRecords = Prefs.getAllRecords(context)
             val allHolidays = Prefs.getAllHolidays(context)
+
+            // 보는 해의 공휴일이 없으면 서버에 요청 (한 번만), 받아오면 위젯 갱신
+            val yearStr = String.format("%04d", year)
+            val hasYear = allHolidays.keys.any { it.startsWith(yearStr) }
+            if (!hasYear && requestedYears.add(yearStr)) {
+                SyncManager.pullHolidays(context, yearStr) { ok ->
+                    if (ok) updateAll(context)
+                }
+            }
+
             val catMap: Map<String, Category> = Prefs.getCategories(context).associateBy { it.id }
             // 공휴일 이름맵 (연휴 대표일 계산용)
             val holNames = HashMap<String, String>()
