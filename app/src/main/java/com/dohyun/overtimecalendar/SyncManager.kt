@@ -110,15 +110,15 @@ object SyncManager {
     }
 
     /** 특일(공휴일/절기/기념일) 받아와 로컬 저장. 연 1회 정도면 충분 */
-    fun pullHolidays(ctx: Context, cb: ((Boolean) -> Unit)? = null) {
+    fun pullHolidays(ctx: Context, year: String = "", cb: ((Boolean) -> Unit)? = null) {
         val base = Prefs.getUrl(ctx)
         if (base.isEmpty()) { cb?.invoke(false); return }
         executor.execute {
             var ok = false
             try {
                 val all = ArrayList<Holiday>()
-                // 2026~2030 한 번에 받기 (year 파라미터 없이 전체) — 서버는 year 없으면 전체 반환
-                val u = base + "?action=holidays"
+                val u = if (year.isNotEmpty()) base + "?action=holidays&year=" + enc(year)
+                        else base + "?action=holidays"
                 val res = httpGet(u)
                 val obj = JSONObject(res)
                 if (obj.optBoolean("ok", false)) {
@@ -127,7 +127,8 @@ object SyncManager {
                         val o = arr.getJSONObject(i)
                         all.add(Holiday(o.getString("date"), o.optString("kind", "anniv"), o.optString("name", "")))
                     }
-                    Prefs.saveHolidays(ctx, all)
+                    if (year.isNotEmpty()) Prefs.mergeHolidays(ctx, year, all)
+                    else Prefs.saveHolidays(ctx, all)
                     ok = true
                 }
             } catch (_: Exception) {

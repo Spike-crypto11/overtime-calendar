@@ -257,6 +257,21 @@ object Prefs {
         sp(ctx).edit().putString(KEY_HOLIDAYS, obj.toString()).apply()
     }
 
+    /** 특정 해 특일을 받아 기존과 병합 저장 (다른 해는 유지) */
+    fun mergeHolidays(ctx: Context, year: String, holidays: List<Holiday>) {
+        val existing = getAllHolidays(ctx).toMutableMap()
+        // 그 해 기존 항목 제거 후 새로 넣기
+        val toRemove = existing.keys.filter { it.startsWith(year) }
+        for (k in toRemove) existing.remove(k)
+        val byDate = HashMap<String, MutableList<Holiday>>()
+        for (h in holidays) byDate.getOrPut(h.date) { ArrayList() }.add(h)
+        for ((d, l) in byDate) existing[d] = l
+        // 전체 다시 저장
+        val flat = ArrayList<Holiday>()
+        for ((_, l) in existing) flat.addAll(l)
+        saveHolidays(ctx, flat)
+    }
+
     fun colorForKind(kind: String): Int = when (kind) {
         "holiday" -> COLOR_HOLIDAY
         "term" -> COLOR_TERM

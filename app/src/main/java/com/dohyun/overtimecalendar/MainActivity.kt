@@ -16,6 +16,7 @@ import java.util.Calendar
 class MainActivity : AppCompatActivity() {
 
     private var year = 0
+    private val requestedYears = HashSet<String>()  // 공휴일 요청한 해 (중복요청 방지)
     private var themeBarColor = 0xFFF3D9B1.toInt()
     private var themeWeekBg = 0xFFFDF3E7.toInt()
     private var month = 0
@@ -61,10 +62,7 @@ class MainActivity : AppCompatActivity() {
         SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
             if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
-        // 특일을 항상 재시도 (이미 있어도 조용히 최신화)
-        SyncManager.pullHolidays(this) { ok ->
-            if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
-        }
+        // 특일은 render()에서 보는 해별로 자동 요청하므로 여기선 생략
         // 일정 받아오기
         SyncManager.pullEvents(this) { ok ->
             if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
@@ -114,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         SyncManager.pullMonth(this, DateUtils.monthPrefix(year, month)) { ok ->
             if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
-        SyncManager.pullHolidays(this) { ok ->
+        SyncManager.pullHolidays(this, String.format("%04d", year)) { ok ->
             if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
         }
         SyncManager.pullEvents(this) { ok ->
@@ -185,6 +183,16 @@ class MainActivity : AppCompatActivity() {
 
         val allRecords = Prefs.getAllRecords(this)
         val allHolidays = Prefs.getAllHolidays(this)
+
+        // 보는 해의 공휴일이 로컬에 없으면 서버에 그 해를 요청 (한 번만)
+        val yearStr = String.format("%04d", year)
+        val hasThisYear = allHolidays.keys.any { it.startsWith(yearStr) }
+        if (!hasThisYear && requestedYears.add(yearStr)) {
+            SyncManager.pullHolidays(this, yearStr) { ok ->
+                if (ok) { render(); CalendarWidgetProvider.updateAll(this) }
+            }
+        }
+
         val cats = Prefs.getCategories(this)
         val cells = ArrayList<CalendarCell>()
         val lead = DateUtils.firstWeekdayIndex(year, month)

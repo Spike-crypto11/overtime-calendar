@@ -120,11 +120,37 @@ class EventActivity : AppCompatActivity() {
         }
         for (color in Prefs.PALETTE) {
             val dot = View(this)
-            val lp = LinearLayout.LayoutParams(dp(30), dp(30)); lp.setMargins(dp(3), dp(3), dp(3), dp(3))
+            val lp = LinearLayout.LayoutParams(dp(34), dp(34)); lp.setMargins(dp(4), dp(4), dp(4), dp(4))
             dot.layoutParams = lp
             dot.setOnClickListener { selectedColor = color; refresh() }
             palette.addView(dot); dots.add(dot)
         }
+        // 커스텀 RGB 버튼 (무지개 + 연필 느낌)
+        val customDot = View(this)
+        val clp = LinearLayout.LayoutParams(dp(34), dp(34)); clp.setMargins(dp(4), dp(4), dp(4), dp(4))
+        customDot.layoutParams = clp
+        val cgd = GradientDrawable(
+            GradientDrawable.Orientation.TL_BR,
+            intArrayOf(0xFFFF0000.toInt(), 0xFF00FF00.toInt(), 0xFF0000FF.toInt())
+        )
+        cgd.shape = GradientDrawable.OVAL
+        cgd.setStroke(dp(1), 0xFF666666.toInt())
+        customDot.background = cgd
+        customDot.setOnClickListener {
+            showColorPicker(selectedColor) { picked ->
+                selectedColor = picked
+                // 커스텀 색이면 팔레트 테두리 다 해제하고 커스텀에 테두리
+                refresh()
+                val sel = GradientDrawable(
+                    GradientDrawable.Orientation.TL_BR,
+                    intArrayOf(0xFFFF0000.toInt(), 0xFF00FF00.toInt(), 0xFF0000FF.toInt())
+                )
+                sel.shape = GradientDrawable.OVAL
+                sel.setStroke(dp(3), Color.BLACK)
+                customDot.background = sel
+            }
+        }
+        palette.addView(customDot)
         refresh()
 
         val dialog = AlertDialog.Builder(this).setView(view).create()
@@ -167,6 +193,45 @@ class EventActivity : AppCompatActivity() {
         DatePickerDialog(this, { _, y, m, d ->
             onPicked(DateUtils.ymd(y, m + 1, d))
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+    }
+
+    /** RGB 슬라이더로 색 직접 선택 */
+    private fun showColorPicker(current: Int, onPicked: (Int) -> Unit) {
+        val ctx = this
+        val box = LinearLayout(ctx)
+        box.orientation = LinearLayout.VERTICAL
+        val pad = dp(20); box.setPadding(pad, pad, pad, pad)
+
+        // 미리보기
+        val preview = View(ctx)
+        val pvLp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(50))
+        preview.layoutParams = pvLp
+        box.addView(preview)
+
+        var r = Color.red(current); var g = Color.green(current); var b = Color.blue(current)
+        fun upd() { preview.setBackgroundColor(Color.rgb(r, g, b)) }
+        upd()
+
+        fun addSlider(label: String, init: Int, onCh: (Int) -> Unit) {
+            val tv = TextView(ctx); tv.text = label; tv.setPadding(0, dp(12), 0, 0); box.addView(tv)
+            val sb = android.widget.SeekBar(ctx); sb.max = 255; sb.progress = init
+            sb.setOnSeekBarChangeListener(object : android.widget.SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(s: android.widget.SeekBar?, p: Int, u: Boolean) { onCh(p); upd() }
+                override fun onStartTrackingTouch(s: android.widget.SeekBar?) {}
+                override fun onStopTrackingTouch(s: android.widget.SeekBar?) {}
+            })
+            box.addView(sb)
+        }
+        addSlider("빨강 (R)", r) { r = it }
+        addSlider("초록 (G)", g) { g = it }
+        addSlider("파랑 (B)", b) { b = it }
+
+        AlertDialog.Builder(ctx)
+            .setTitle("색 직접 고르기")
+            .setView(box)
+            .setPositiveButton("선택") { _, _ -> onPicked(0xFF000000.toInt() or Color.rgb(r, g, b)) }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()
