@@ -46,12 +46,17 @@
             android:text="색"
             android:textStyle="bold"
             android:paddingTop="12dp"/>
-        <LinearLayout
-            android:id="@+id/colorPalette"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="4dp"/>
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/colorPalette"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="4dp"/>
+        </HorizontalScrollView>
 
         <CheckBox
             android:id="@+id/cbHasNumber"

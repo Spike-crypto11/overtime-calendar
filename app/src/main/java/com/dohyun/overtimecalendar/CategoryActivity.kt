@@ -118,13 +118,31 @@ class CategoryActivity : AppCompatActivity() {
         }
         for (color in Prefs.PALETTE) {
             val dot = View(this)
-            val lp = LinearLayout.LayoutParams(dp(32), dp(32))
-            lp.setMargins(dp(3), dp(3), dp(3), dp(3))
+            val lp = LinearLayout.LayoutParams(dp(34), dp(34))
+            lp.setMargins(dp(4), dp(4), dp(4), dp(4))
             dot.layoutParams = lp
             dot.setOnClickListener { selectedColor = color; refreshColorDots() }
             colorPalette.addView(dot)
             dots.add(dot)
         }
+        // 커스텀 색상환 버튼
+        val customDot = View(this)
+        val clp = LinearLayout.LayoutParams(dp(34), dp(34)); clp.setMargins(dp(4), dp(4), dp(4), dp(4))
+        customDot.layoutParams = clp
+        val cgd = GradientDrawable(
+            GradientDrawable.Orientation.TL_BR,
+            intArrayOf(0xFFFF0000.toInt(), 0xFF00FF00.toInt(), 0xFF0000FF.toInt())
+        )
+        cgd.shape = GradientDrawable.OVAL
+        cgd.setStroke(dp(1), 0xFF666666.toInt())
+        customDot.background = cgd
+        customDot.setOnClickListener {
+            ColorPicker.show(this, selectedColor) { picked ->
+                selectedColor = picked
+                refreshColorDots()
+            }
+        }
+        colorPalette.addView(customDot)
         refreshColorDots()
 
         val dialog = AlertDialog.Builder(this)
