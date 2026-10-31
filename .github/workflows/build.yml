@@ -24,6 +24,9 @@ jobs:
 
       - name: 안드로이드 SDK 설정
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-34 build-tools;34.0.0
+          log-accepted-android-sdk-licenses: false
 
       - name: Gradle 설정 (8.7)
         uses: gradle/actions/setup-gradle@v4
