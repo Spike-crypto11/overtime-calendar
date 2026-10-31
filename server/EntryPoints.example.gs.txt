@@ -1,27 +1,4 @@
-/* EXAMPLE ONLY. First inspect and back up the actual deployed server source.
- * Rename the existing doGet to legacyDoGet, keeping its body unchanged.
- * If doPost exists, rename it legacyDoPost, keeping its body unchanged.
- * Then use these entry points. Do NOT paste this beside another doGet/doPost.
- * Every legacy data operation must share the same script lock as payrollPost.
- * If legacy code already takes a script lock, reconcile the locks in source first.
- */
-function doGet(e) {
-  var payroll = payrollGet(e);
-  if (payroll) return payroll;
-  var lock = LockService.getScriptLock();
-  lock.waitLock(20000);
-  try { return legacyDoGet(e); }
-  finally { lock.releaseLock(); }
-}
-function doPost(e) {
-  var payroll = payrollPost(e);
-  if (payroll) return payroll;
-  // When legacy doPost does not exist, use the unsupported response instead.
-  if (typeof legacyDoPost !== 'function')
-    return ContentService.createTextOutput(JSON.stringify({ok:false,error:'UNSUPPORTED_ACTION'}))
-      .setMimeType(ContentService.MimeType.JSON);
-  var lock = LockService.getScriptLock();
-  lock.waitLock(20000);
-  try { return legacyDoPost(e); }
-  finally { lock.releaseLock(); }
-}
+OBSOLETE — 적용하지 마세요.
+실제 서버 소스를 반영한 Code.gs + Payroll.gs를 사용합니다.
+Code.gs의 doGet/doPost는 이미 payrollGet/payrollPost를 호출합니다.
+기존 저장 함수가 ScriptLock을 소유하므로 외부 잠금을 추가하면 안 됩니다.

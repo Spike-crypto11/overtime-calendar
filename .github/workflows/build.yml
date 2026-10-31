@@ -34,7 +34,7 @@ jobs:
           gradle-version: '8.7'
 
       - name: 서버 집계·데이터 보존 테스트
-        run: node --test tests/payroll-server.test.cjs
+        run: node --test tests/*.test.cjs
 
       - name: 단위 테스트 · Lint · 디버그 APK 빌드
         run: gradle testDebugUnitTest lintDebug assembleDebug --no-daemon

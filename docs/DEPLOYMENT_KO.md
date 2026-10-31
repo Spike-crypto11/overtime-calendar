@@ -5,23 +5,20 @@
 Apps Script 실서버 배포와 기기 내 업데이트 설치 검증은 별도로 필요합니다.
 기본 브랜치 병합 또는 실제 스프레드시트 변경을 이 소스 변경으로 수행하지 않습니다.
 
-## 추가로 필요한 서버 자료
+## 확인한 실제 서버 원본과 통합
 
-1. `잔업특근DB` → 확장 프로그램 → Apps Script → **모든 .gs 파일 및 appsscript.json**.
-2. 현재 사용 중인 배포가 그 프로젝트인지 확인할 수 있는 **편집기 URL과 배포 버전**.
-3. 독립형 스크립트라면 어떤 함수로 대상 스프레드시트를 여는지.
+사용자가 제공한 Code.gs를 기준으로 `server/Code.gs`에 기존 서버 기능과 월별 집계 진입점을 통합했습니다.
+`server/Payroll.gs`와 함께 사용합니다. 기존 저장·일정 함수의 ScriptLock을 유지하며
+진입점 전체를 다시 잠그지 않습니다. 이전 EntryPoints 예시는 사용하지 마세요.
+공개 소스에는 인증키가 없으며, KASI_KEY 스크립트 속성에서 읽습니다.
+별도로 제공하는 비공개 통합 Code.gs는 두 파일을 합치고 제공된 원본 인증키를 유지한 붙여넣기용입니다.
+이 통합 파일을 사용할 경우 Payroll.gs를 추가로 붙이지 마세요(함수 중복 방지).
 
-웹 앱의 `/exec` 주소로는 서버 원본을 읽을 수 없습니다. 저장소에도 서버 파일이 없었고,
-연결된 Drive의 Apps Script MIME 검색에서도 프로젝트를 찾지 못했습니다.
-따라서 기존 서버 구현과 병합·실서버 동기화 완료를 주장하지 않습니다.
-
-## 서버 확장
-
-`server/Payroll.gs`는 기존 save/list/events/holidays 함수를 대체하지 않는 추가 모듈입니다.
-`EntryPoints.example.gs.txt`는 기존 소스를 확인한 다음 적용할 진입점 예시입니다.
-기존 doGet/doPost를 legacyDoGet/legacyDoPost로 이름만 바꾸고, 양쪽 데이터 접근에 같은
-ScriptLock을 적용해야 합니다. 기존 코드의 잠금과 중복 취득하지 않도록 실제 소스 병합이 필요합니다.
-독립형이면 `getActiveSpreadsheet()`를 기존 서버의 대상 열기 함수로 연결하세요.
+비정상/누락 records는 거부하며 명시적 빈 배열만 해당 날짜를 삭제합니다.
+기록 교체와 수동 공휴일 갱신은 새 데이터를 먼저 쓰고 flush한 뒤 이전 행을 제거합니다.
+공휴일 API 오류·불완전 응답·빈 연도 결과에서는 기존 연도 데이터를 보존합니다.
+Apps Script/Sheets는 트랜잭션이 아니므로 중간 삭제 실패 시 중복 행이 남을 수 있습니다.
+원본 백업과 사본 검증이 필요하며, 서버 원본 접근·배포 도구가 없어 실제 배포는 수행하지 않았습니다.
 
 서버 원본·스프레드시트를 백업한 후 **복사본에서** 다음을 확인하고 같은 기존 배포의 버전을 갱신합니다.
 원래 URL은 유지해야 앱의 기존 설정도 유지됩니다.
@@ -79,26 +76,16 @@ GitHub 원본 빌드는 versionCode 2이며 **위 preview 앱을 업데이트할
 
 ## GitHub 반영
 
-저장소 접근 권한이 있는 로컬 Git 환경에서 수정 소스나 제공된 패치를 적용해 다음처럼 반영합니다.
-
-```bash
-git switch -c codex/payroll-monthly-sync
-git apply /path/to/overtime-calendar-payroll.patch
-git add .
-git commit -m "Add non-destructive monthly payroll sync and explicit pay rules"
-git push -u origin codex/payroll-monthly-sync
-```
-
-GitHub에서 이 브랜치를 main 대상 PR로 엽니다. 현재 main의 기본 상태가 바뀌었다면 먼저 충돌을 검토해야 합니다.
-GitHub 인증은 사용하는 환경의 연결을 따릅니다. 비밀번호·개인 액세스 토큰·서명키를
-채팅이나 저장소에 올리지 마세요.
+수정은 `codex/payroll-monthly-sync`와 Draft PR #1에서 검토합니다.
+https://github.com/Spike-crypto11/overtime-calendar/pull/1
+main 병합과 실서버 배포는 별도입니다. 공개 저장소에 인증키나 서명키를 넣지 않습니다.
 
 ## 빌드·검증
 
 JDK17, Gradle8.7, Android SDK34 / build-tools34.0.0.
 
 ```bash
-node --test tests/payroll-server.test.cjs
+node --test tests/*.test.cjs
 gradle testDebugUnitTest lintDebug assembleDebug --no-daemon
 python scripts/check_apk_update.py old.apk new.apk --build-tools "$ANDROID_HOME/build-tools/34.0.0"
 ```
