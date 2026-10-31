@@ -136,7 +136,7 @@ object Prefs {
         if (idx >= 0) { list[idx] = cat; saveCategories(ctx, list) }
     }
 
-    fun deleteCategory(ctx: Context, id: String) {
+    @Synchronized fun deleteCategory(ctx: Context, id: String) {
         val list = getCategories(ctx)
         list.removeAll { it.id == id }
         saveCategories(ctx, list)
@@ -156,7 +156,7 @@ object Prefs {
     }
 
     // ---------- 날짜별 기록 ----------
-    fun getAllRecords(ctx: Context): MutableMap<String, MutableList<DayRecord>> {
+    @Synchronized fun getAllRecords(ctx: Context): MutableMap<String, MutableList<DayRecord>> {
         val raw = sp(ctx).getString(KEY_RECORDS, "{}") ?: "{}"
         val map = HashMap<String, MutableList<DayRecord>>()
         try {
@@ -197,21 +197,23 @@ object Prefs {
         getAllRecords(ctx)[date] ?: emptyList()
 
     /** 특정 날짜의 기록 전체를 교체 (빈 리스트면 그날 삭제) */
-    fun setRecords(ctx: Context, date: String, recs: List<DayRecord>) {
+    @Synchronized fun setRecords(ctx: Context, date: String, recs: List<DayRecord>) {
         val map = getAllRecords(ctx)
         if (recs.isEmpty()) map.remove(date) else map[date] = recs.toMutableList()
         saveAllRecords(ctx, map)
         // 저장 직후엔 무조건 전송대기로 표시 → push 성공 전까지 pull이 이 날짜를 못 덮음
         addPending(ctx, date)
+        PayrollStore.mark(ctx, date.take(7))
     }
 
     /** 서버에서 받은 한 달치로 로컬의 해당 월 교체 (전송 대기분 보존) */
-    fun replaceMonth(ctx: Context, monthPrefix: String, serverRecords: Map<String, List<DayRecord>>) {
+    @Synchronized fun replaceMonth(ctx: Context, monthPrefix: String, serverRecords: Map<String, List<DayRecord>>) {
         // 병합 방식: 서버에 있는 날짜는 서버 값으로 갱신하되,
         // 로컬에만 있는(아직 서버 미반영) 날짜는 지우지 않음 → 방금 저장한 게 사라지지 않음.
         val map = getAllRecords(ctx)
         val pending = getPending(ctx)
         for ((date, recs) in serverRecords) {
+            if (!date.startsWith("$monthPrefix-")) continue
             if (pending.contains(date)) continue  // 전송 대기중인 건 로컬 우선
             if (recs.isNotEmpty()) map[date] = recs.toMutableList()
         }
@@ -347,14 +349,18 @@ object Prefs {
     }
 
     // ---------- 전송 대기 ----------
-    fun getPending(ctx: Context): MutableSet<String> =
+    @Synchronized fun getPending(ctx: Context): MutableSet<String> =
         HashSet(sp(ctx).getStringSet(KEY_PENDING, emptySet()) ?: emptySet())
-    fun addPending(ctx: Context, date: String) {
+    @Synchronized fun addPending(ctx: Context, date: String) {
         val s = getPending(ctx); s.add(date)
         sp(ctx).edit().putStringSet(KEY_PENDING, s).apply()
     }
-    fun removePending(ctx: Context, date: String) {
+    @Synchronized fun removePending(ctx: Context, date: String) {
         val s = getPending(ctx); s.remove(date)
         sp(ctx).edit().putStringSet(KEY_PENDING, s).apply()
+    }
+
+    @Synchronized fun acknowledgeRecords(ctx: Context, date: String, sent: List<DayRecord>) {
+        if (getRecords(ctx, date) == sent) removePending(ctx, date)
     }
 }

@@ -86,5 +86,12 @@
             android:text="내 일정 관리 (휴가·기념일 등)"
             android:layout_marginTop="12dp"/>
 
+        <Button
+            android:id="@+id/btnPayroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="월별 집계 · 급여 검증"
+            android:layout_marginTop="12dp"/>
+
     </LinearLayout>
 </ScrollView>

@@ -3,7 +3,11 @@ name: Build APK
 on:
   push:
     branches: [ main, master ]
+  pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -26,8 +30,11 @@ jobs:
         with:
           gradle-version: '8.7'
 
-      - name: 디버그 APK 빌드
-        run: gradle assembleDebug --no-daemon
+      - name: 서버 집계·데이터 보존 테스트
+        run: node --test tests/payroll-server.test.cjs
+
+      - name: 단위 테스트 · Lint · 디버그 APK 빌드
+        run: gradle testDebugUnitTest lintDebug assembleDebug --no-daemon
 
       - name: APK 업로드
         uses: actions/upload-artifact@v4
@@ -35,3 +42,14 @@ jobs:
           name: overtime-calendar-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      - name: 테스트 및 Lint 결과 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: payroll-verification-reports
+          path: |
+            app/build/test-results/testDebugUnitTest/
+            app/build/reports/tests/testDebugUnitTest/
+            app/build/reports/lint-results-debug.*
+          if-no-files-found: ignore
