@@ -1,0 +1,4 @@
+OBSOLETE — 적용하지 마세요.
+실제 서버 소스를 반영한 Code.gs + Payroll.gs를 사용합니다.
+Code.gs의 doGet/doPost는 이미 payrollGet/payrollPost를 호출합니다.
+기존 저장 함수가 ScriptLock을 소유하므로 외부 잠금을 추가하면 안 됩니다.

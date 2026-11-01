@@ -150,6 +150,7 @@ class CalendarAdapter(
         tv.textSize = 12f
         tv.setBackgroundColor(cat.color)
         tv.setTextColor(0xFFFFFFFF.toInt())
+        PayrollCategoryStyle.styleText(tv)
     }
 
     private fun fmt(v: Double): String =

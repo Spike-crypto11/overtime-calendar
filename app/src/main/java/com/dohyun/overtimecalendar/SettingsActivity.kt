@@ -13,6 +13,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        findViewById<Button>(R.id.btnPayroll).setOnClickListener {
+            startActivity(Intent(this, PayrollActivity::class.java))
+        }
 
         val etUrl = findViewById<EditText>(R.id.etUrl)
         val tvResult = findViewById<TextView>(R.id.tvTestResult)
