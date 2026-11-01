@@ -39,9 +39,9 @@ object PayrollCategoryStyle {
         return result
     }
 
-    @JvmStatic @Synchronized fun ensure(ctx: Context, existing: List<Category>): List<Category> {
+    @JvmStatic fun ensure(ctx: Context, existing: List<Category>): List<Category> = synchronized(Prefs) {
         val prefs = ctx.getSharedPreferences("payroll_v1", Context.MODE_PRIVATE)
-        if (prefs.getBoolean("category_style_v18", false)) return existing
+        if (prefs.getBoolean("category_style_v18", false)) return@synchronized existing
         val halfId = ctx.packageManager.getApplicationInfo(ctx.packageName, PackageManager.GET_META_DATA)
             .metaData?.getString("daylog.confirmedHalfDayId")
         val updated = upgraded(existing, halfId)
@@ -59,7 +59,7 @@ object PayrollCategoryStyle {
             if (roles != rules.roles) PayrollStore.saveRules(ctx, month, rules.copy(roles = roles))
         }
         prefs.edit().putBoolean("category_style_v18", true).commit()
-        return updated
+        updated
     }
 
     private fun isLeave(text: CharSequence) = text.toString().trim() in listOf("반차", "연차")
