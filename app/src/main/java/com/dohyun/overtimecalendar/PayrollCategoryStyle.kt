@@ -74,12 +74,15 @@ object PayrollCategoryStyle {
         styled.setSpan(ForegroundColorSpan(LEAVE_RED), 0, styled.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         views.setTextViewText(id, styled)
         // Resolve the original recovered R IDs rather than assuming the source-build R ordering.
-        val ids = Class.forName("com.dohyun.overtimecalendar.R\$id")
-        val name = ids.fields.firstOrNull { it.type == Int::class.javaPrimitiveType && it.getInt(null) == id }?.name
-        if (name != null && name.startsWith("label_")) {
-            val background = ids.getField("bg_$name").getInt(null)
-            views.setImageViewBitmap(background, null as Bitmap?)
-            views.setViewVisibility(background, View.GONE)
+        views.setInt(id, "setBackgroundColor", Color.TRANSPARENT)
+        runCatching {
+            val ids = Class.forName("com.dohyun.overtimecalendar.R\$id")
+            val name = ids.fields.firstOrNull { it.type == Int::class.javaPrimitiveType && it.getInt(null) == id }?.name
+            if (name != null && name.startsWith("label_")) {
+                val background = ids.getField("bg_$name").getInt(null)
+                views.setImageViewBitmap(background, null as Bitmap?)
+                views.setViewVisibility(background, View.GONE)
+            }
         }
     }
 }
