@@ -2,15 +2,7 @@ package com.dohyun.overtimecalendar
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.view.View
 import android.widget.RemoteViews
 import android.widget.TextView
 
@@ -67,30 +59,14 @@ object PayrollCategoryStyle {
     }
 
     private fun isLeave(text: CharSequence) = text.toString().trim() in listOf("반차", "연차")
-    @JvmStatic fun labelColor(text: String, fallback: Int): Int = if (isLeave(text)) LEAVE_RED else fallback
-    @JvmStatic fun chipColor(color: Int): Int = if (color == LEAVE_RED) LEAVE_BACKGROUND else color
+    @JvmStatic fun labelColor(text: String, fallback: Int): Int = if (isLeave(text)) Color.WHITE else fallback
+    @JvmStatic fun chipColor(color: Int): Int = color
     @JvmStatic fun styleText(tv: TextView) {
-        if (isLeave(tv.text)) { tv.setBackgroundColor(LEAVE_BACKGROUND); tv.setTextColor(LEAVE_RED) }
+        if (isLeave(tv.text)) { tv.setBackgroundColor(LEAVE_RED); tv.setTextColor(Color.WHITE) }
     }
     @JvmStatic fun setWidgetLabel(views: RemoteViews, id: Int, text: CharSequence) {
-        if (!isLeave(text)) { views.setTextViewText(id, text); return }
-        val styled = SpannableString(text)
-        styled.setSpan(ForegroundColorSpan(LEAVE_RED), 0, styled.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        views.setTextViewText(id, styled)
-        // Resolve the original recovered R IDs rather than assuming the source-build R ordering.
-        views.setInt(id, "setBackgroundColor", LEAVE_BACKGROUND)
-        runCatching {
-            val ids = Class.forName("com.dohyun.overtimecalendar.R\$id")
-            val name = ids.fields.firstOrNull { it.type == Int::class.javaPrimitiveType && it.getInt(null) == id }?.name
-            if (name != null && name.startsWith("label_")) {
-                val background = ids.getField("bg_$name").getInt(null)
-                val chip = Bitmap.createBitmap(96, 40, Bitmap.Config.ARGB_8888)
-                val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = LEAVE_BACKGROUND }
-                Canvas(chip).drawRoundRect(RectF(0f, 0f, 96f, 40f), 6f, 6f, paint)
-                views.setImageViewBitmap(background, chip)
-                views.setViewVisibility(background, View.VISIBLE)
-                views.setInt(id, "setBackgroundColor", Color.TRANSPARENT)
-            }
-        }
+        // Keep the original colored chip and its white text; never add a red foreground span.
+        views.setTextViewText(id, text)
+        if (isLeave(text)) views.setTextColor(id, Color.WHITE)
     }
 }
