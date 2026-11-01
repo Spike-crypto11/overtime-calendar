@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Update only the payroll DEX and version of the previously verified preview v15 APK.
+"""Update only the payroll DEX and version of the previously verified preview v15 or Daylog v18 APK.
 
 Tools and the new payroll DEX are from the CI preview-build-inputs artifact.
 Signing material stays in the owner's private recovery directory.
@@ -19,7 +19,13 @@ p.add_argument('--recovery', required=True, type=Path)
 p.add_argument('--output', required=True, type=Path)
 a = p.parse_args()
 old, bundle, recovery, output = [x.resolve() for x in (a.installed, a.bundle, a.recovery, a.output)]
-assert hashlib.sha256(old.read_bytes()).hexdigest() == '110239985147c68c0915d36b193aa017a1b17664a9248ea2246aa2ae9d28ca16', 'Unsupported preview base'
+profiles = {
+    '110239985147c68c0915d36b193aa017a1b17664a9248ea2246aa2ae9d28ca16': (15, 16, '1.14-payroll-preview', '1.15-payroll-categories'),
+    'b725a3d5864b21172139c1b9350ddc8803a8484152cf230f4b03d39125fd0111': (18, 19, '1.17-daylog-record-styles', '1.18-daylog-leave-background'),
+}
+profile = profiles.get(hashlib.sha256(old.read_bytes()).hexdigest())
+assert profile, 'Unsupported preview base'
+old_version, new_version, old_name, new_name = profile
 bt = bundle / 'build-tools'
 for name in ('zipalign', 'apksigner'):
     (bt / name).chmod(0o755)
@@ -32,9 +38,9 @@ with tempfile.TemporaryDirectory(prefix='preview-update-', dir=output.parent) as
     run('java', '-jar', bundle / 'apktool.jar', 'd', '-s', '-f', old, '-o', project)
     yaml = project / 'apktool.yml'
     text = yaml.read_text()
-    text, count = re.subn(r'versionCode: [\'\"]?15[\'\"]?', 'versionCode: 16', text)
+    text, count = re.subn(r'versionCode: [\'\"]?' + str(old_version) + r'[\'\"]?', 'versionCode: ' + str(new_version), text)
     assert count == 1
-    text = text.replace('1.14-payroll-preview', '1.15-payroll-categories')
+    text = text.replace(old_name, new_name)
     yaml.write_text(text)
     # -s keeps every original DEX byte-for-byte. Replace only the independent payroll module.
     (project / 'classes6.dex').write_bytes((bundle / 'dex/classes.dex').read_bytes())
