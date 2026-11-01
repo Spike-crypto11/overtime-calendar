@@ -76,7 +76,7 @@ object Prefs {
         if (raw == null) {
             val def = defaultCategories()
             saveCategories(ctx, def)
-            return def.toMutableList()
+            return PayrollCategoryStyle.ensure(ctx, def).toMutableList()
         }
         val list = ArrayList<Category>()
         try {
@@ -100,9 +100,9 @@ object Prefs {
         if (list.isEmpty()) {
             val def = defaultCategories()
             saveCategories(ctx, def)
-            return def.toMutableList()
+            return PayrollCategoryStyle.ensure(ctx, def).toMutableList()
         }
-        return list
+        return PayrollCategoryStyle.ensure(ctx, list).toMutableList()
     }
 
     fun saveCategories(ctx: Context, cats: List<Category>) {

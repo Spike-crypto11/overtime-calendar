@@ -215,9 +215,10 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                             } else {
                                 val (text, color, size) = items[k]
                                 rv.setTextViewText(labelId, text)
-                                rv.setInt(labelId, "setBackgroundColor", color)
+                                rv.setInt(labelId, "setBackgroundColor", com.dohyun.overtimecalendar.PayrollCategoryStyle.chipColor(color))
                                 rv.setTextColor(labelId, 0xFFFFFFFF.toInt())
                                 rv.setTextViewTextSize(labelId, android.util.TypedValue.COMPLEX_UNIT_SP, size)
+                                com.dohyun.overtimecalendar.PayrollCategoryStyle.setWidgetLabel(rv, labelId, text)
                             }
                             rv.setViewVisibility(labelId, android.view.View.VISIBLE)
                         } else {
