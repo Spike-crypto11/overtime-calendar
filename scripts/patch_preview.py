@@ -66,6 +66,6 @@ assert 'PayrollActivity' not in text
 text=text.replace('</application>','<activity android:name="com.dohyun.overtimecalendar.PayrollActivity" android:exported="false"/></application>')
 manifest.write_text(text)
 yaml=out/'apktool.yml';text=yaml.read_text();assert 'versionCode: 14' in text
-text=text.replace('versionCode: 14','versionCode: 15').replace('versionName: 1.13-weekend-legibility','versionName: 1.14-payroll-preview')
+text=text.replace('versionCode: 14','versionCode: 16').replace('versionName: 1.13-weekend-legibility','versionName: 1.15-payroll-categories')
 yaml.write_text(text)
 print(out)

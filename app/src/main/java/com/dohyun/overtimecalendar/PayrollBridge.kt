@@ -31,6 +31,6 @@ object PayrollBridge {
         body.addView(Button(activity).apply {
             text = "월별 집계 · 급여 검증"
             setOnClickListener { activity.startActivity(Intent(activity, PayrollActivity::class.java)) }
-        })
+        }, 1)
     }
 }

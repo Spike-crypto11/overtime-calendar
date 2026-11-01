@@ -67,11 +67,14 @@ class PayrollActivity : Activity() {
         button("월별 집계 재전송") { PayrollSync.scheduleMonth(this, month); Toast.makeText(this, "전송 요청됨. 잠시 후 다시 확인하세요.", Toast.LENGTH_SHORT).show() }
         text("항목 역할 (잔업·특근만으로 출근을 추정하지 않습니다)")
         val roleNames = arrayOf("집계 제외", "출근", "반차", "잔업 시간", "특근 시간", "확인된 주휴 1회 표시")
-        val roleInputs = Prefs.getCategories(this).associate { cat ->
-            text("${cat.name} (${cat.id})")
-            cat.id to Spinner(this).apply {
+        text("미등록 항목도 원본 ID와 기록일로 표시합니다. 달력에서 의미를 확인한 뒤 역할을 선택하세요.")
+        val categoryLabels = PayrollCategories.labels(month,
+            Prefs.getCategories(this).associate { it.id to it.name }, Prefs.getAllRecords(this), rules.roles)
+        val roleInputs = categoryLabels.mapValues { (id, label) ->
+            text("$label ($id)")
+            Spinner(this).apply {
                 adapter = ArrayAdapter(this@PayrollActivity, android.R.layout.simple_spinner_dropdown_item, roleNames)
-                setSelection((rules.roles[cat.id] ?: PayrollRole.IGNORE).ordinal); body.addView(this)
+                setSelection((rules.roles[id] ?: PayrollRole.IGNORE).ordinal); body.addView(this)
             }
         }
         val dayHours = input("확인된 출근 1일 기본근로시간", rules.hoursPerDay?.toPlainString() ?: "")
@@ -90,7 +93,7 @@ class PayrollActivity : Activity() {
         }
         button("이 월의 규칙·금액 저장") {
             try {
-                val updated = PayrollRules(roleInputs.mapValues { PayrollRole.values()[it.value.selectedItemPosition] },
+                val updated = PayrollRules(rules.roles + roleInputs.mapValues { PayrollRole.values()[it.value.selectedItemPosition] },
                     decimal(dayHours), decimal(halfHours), useDays.isChecked, useWeeks.isChecked,
                     decimal(perWeek), evidence.text.toString().trim(), earningInputs.mapValues { decimal(it.value) },
                     deductionInputs.mapValues { decimal(it.value) })
