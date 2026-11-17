@@ -70,7 +70,11 @@ object SyncManager {
             } catch (_: Exception) {
                 ok = false
             }
-            if (ok) Prefs.removePending(ctx, date) else Prefs.addPending(ctx, date)
+            if (ok) {
+                // An older request must not acknowledge a newer edit made during the HTTP call.
+                Prefs.acknowledgeRecords(ctx, date, records)
+                PayrollSync.scheduleMonth(ctx, date.take(7))
+            } else Prefs.addPending(ctx, date)
             main.post { cb?.invoke(ok) }
         }
     }
@@ -100,6 +104,7 @@ object SyncManager {
                         if (recs.isNotEmpty()) map[date] = recs
                     }
                     Prefs.replaceMonth(ctx, monthPrefix, map)
+                    PayrollSync.scheduleMonth(ctx, monthPrefix)
                     ok = true
                 }
             } catch (_: Exception) {
@@ -220,6 +225,7 @@ object SyncManager {
         for (date in pending) {
             push(ctx, date, Prefs.getRecords(ctx, date), null)
         }
+        PayrollSync.flush(ctx)
     }
 
     fun test(ctx: Context, url: String, cb: (Boolean, String) -> Unit) {

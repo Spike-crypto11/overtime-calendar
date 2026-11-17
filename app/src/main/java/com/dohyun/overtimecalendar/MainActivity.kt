@@ -300,7 +300,9 @@ class MainActivity : AppCompatActivity() {
         }
         view.findViewById<TextView>(R.id.tvOpenApp).setOnClickListener {
             dialog.dismiss()
-            startActivity(Intent(this, EventActivity::class.java))
+            startActivity(Intent(this, EventActivity::class.java).apply {
+                putExtra(InputDialogActivity.EXTRA_DATE, date)
+            })
         }
         view.findViewById<Button>(R.id.btnCancel).setOnClickListener { dialog.dismiss() }
         view.findViewById<Button>(R.id.btnSave).setOnClickListener {

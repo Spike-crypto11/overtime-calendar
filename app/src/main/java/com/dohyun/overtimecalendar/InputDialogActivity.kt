@@ -47,6 +47,7 @@ class InputDialogActivity : AppCompatActivity() {
         }
         findViewById<TextView>(R.id.tvOpenApp).setOnClickListener {
             val i = Intent(this, EventActivity::class.java)
+            i.putExtra(EXTRA_DATE, date)
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(i)
             finish()

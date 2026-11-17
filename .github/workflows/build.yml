@@ -3,7 +3,11 @@ name: Build APK
 on:
   push:
     branches: [ main, master ]
+  pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -20,14 +24,45 @@ jobs:
 
       - name: 안드로이드 SDK 설정
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-34 build-tools;34.0.0
+          log-accepted-android-sdk-licenses: false
 
       - name: Gradle 설정 (8.7)
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
-      - name: 디버그 APK 빌드
-        run: gradle assembleDebug --no-daemon
+      - name: 서버 집계·데이터 보존 테스트
+        run: node --test tests/*.test.cjs
+
+      - name: 단위 테스트 · Lint · 디버그 APK 빌드
+        run: gradle testDebugUnitTest lintDebug assembleDebug --no-daemon
+
+      - name: Preview 추가 모듈 및 재조립 도구 준비 (서명키 제외)
+        run: |
+          mkdir -p preview-build-inputs/dex preview-build-inputs/build-tools/lib64 preview-build-inputs/build-tools/lib
+          python3 - <<'PY'
+          import pathlib, zipfile
+          root = pathlib.Path('app/build/tmp/kotlin-classes/debug')
+          with zipfile.ZipFile('preview-build-inputs/payroll-addon.jar', 'w') as archive:
+              for path in root.rglob('Payroll*.class'):
+                  archive.write(path, path.relative_to(root))
+          PY
+          "$ANDROID_HOME/build-tools/34.0.0/d8" --release --min-api 24 --lib "$ANDROID_HOME/platforms/android-34/android.jar" --output preview-build-inputs/dex preview-build-inputs/payroll-addon.jar
+          cp "$ANDROID_HOME/build-tools/34.0.0/zipalign" preview-build-inputs/build-tools/
+          cp "$ANDROID_HOME/build-tools/34.0.0/apksigner" preview-build-inputs/build-tools/
+          cp "$ANDROID_HOME/build-tools/34.0.0/lib/apksigner.jar" preview-build-inputs/build-tools/lib/
+          cp "$ANDROID_HOME/build-tools/34.0.0/lib64/"*.so* preview-build-inputs/build-tools/lib64/
+          curl --fail --location --retry 2 https://github.com/iBotPeaches/Apktool/releases/download/v2.12.1/apktool_2.12.1.jar --output preview-build-inputs/apktool.jar
+
+      - name: Preview 재조립 입력 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-build-inputs
+          path: preview-build-inputs/
+          retention-days: 7
+          if-no-files-found: error
 
       - name: APK 업로드
         uses: actions/upload-artifact@v4
@@ -35,3 +70,14 @@ jobs:
           name: overtime-calendar-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      - name: 테스트 및 Lint 결과 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: payroll-verification-reports
+          path: |
+            app/build/test-results/testDebugUnitTest/
+            app/build/reports/tests/testDebugUnitTest/
+            app/build/reports/lint-results-debug.*
+          if-no-files-found: ignore

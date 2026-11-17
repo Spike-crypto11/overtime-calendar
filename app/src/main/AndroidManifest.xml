@@ -27,6 +27,8 @@
             android:name=".SettingsActivity"
             android:exported="false"/>
 
+        <activity android:name=".PayrollActivity" android:exported="false"/>
+
         <activity
             android:name=".CategoryActivity"
             android:exported="false"/>
