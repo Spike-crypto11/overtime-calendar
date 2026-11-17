@@ -90,7 +90,9 @@ class EventActivity : AppCompatActivity() {
         val palette = view.findViewById<LinearLayout>(R.id.eventColorPalette)
         val btnDelete = view.findViewById<Button>(R.id.btnEventDelete)
 
-        var startDate = ev?.start ?: DateUtils.today()
+        var startDate = ev?.start ?: EventInitialDate.resolve(
+            intent.getStringExtra(InputDialogActivity.EXTRA_DATE), DateUtils.today()
+        )
         var endDate = ev?.end ?: startDate
         var selectedColor = ev?.color ?: Prefs.PALETTE[3]
 
